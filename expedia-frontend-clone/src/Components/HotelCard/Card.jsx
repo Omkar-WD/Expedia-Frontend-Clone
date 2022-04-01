@@ -12,14 +12,35 @@ import {
   Spacer,
   Icon,
 } from "@chakra-ui/react";
+import axios from "axios";
+import API from "../../API";
 
 export const Card = ({ data }) => {
   const [isFav, setIsFav] = useState(false);
   const handleIconClick = () => {
+    {
+      isFav
+        ? axios
+            .put(`${API()}/favourite`, {
+              userId: "624690ee54e299590298b4d5",
+              hotelId: _id,
+            })
+            .then((res) => {
+              console.log(res.data);
+            })
+        : axios
+            .post(`${API()}/favourite`, {
+              userId: "624690ee54e299590298b4d5",
+              hotelId: _id,
+            })
+            .then((res) => {
+              console.log(res.data);
+            });
+    }
     setIsFav(!isFav);
   };
   const {
-    id,
+    _id,
     images,
     city,
     refund,
@@ -50,13 +71,13 @@ export const Card = ({ data }) => {
           "rgba(0, 0, 0, 0.16) 0px 1px 4px, rgb(51, 51, 51) 0px 0px 0px 3px",
       }}
     >
-      <Link to={`/detail-page/${id}`}>
+      <Link to={`/detail-page/${_id}`}>
         <Box>
           <Image src={images[0]} h="200px" />
         </Box>
       </Link>
       <Box p="2">
-        <Link to={`/detail-page/${id}`}>
+        <Link to={`/detail-page/${_id}`}>
           <Box
             h="30px"
             fontWeight="semibold"
@@ -94,7 +115,7 @@ export const Card = ({ data }) => {
             onClick={handleIconClick}
           />
         </Box>
-        <Link to={`/detail-page/${id}`}>
+        <Link to={`/detail-page/${_id}`}>
           <Box mt="1" h="25px">
             <Box as="span" color="gray.600" fontSize="sm">
               {shortDescription}
