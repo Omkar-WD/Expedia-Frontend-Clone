@@ -34,6 +34,7 @@ import {
 } from "@chakra-ui/react";
 import { StarIcon } from "@chakra-ui/icons";
 import IconWithText from "../IconWithText";
+import API from "../../API";
 
 const amenitiesLeft = [
   {
@@ -126,7 +127,7 @@ function DetailView() {
   const { id } = useParams();
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/citiesData/${id}`).then((res) => {
+    axios.get(`${API()}/hotel/${id}`).then((res) => {
       let x = res.data;
       setHotelData(x);
     });

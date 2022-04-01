@@ -33,11 +33,14 @@ import {
   Heading,
   Tag,
 } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
+const isLogin = false;
 
 function Navbar() {
   const [isLargerThan1280] = useMediaQuery("(min-width: 992px)");
   const [isLargerThan576] = useMediaQuery("(min-width: 576px)");
+  const Navigate = useNavigate();
   return (
     <>
       <Box
@@ -105,61 +108,75 @@ function Navbar() {
                   <Text>
                     <Popover>
                       <PopoverTrigger>
-                        <Link to="/">Sign in</Link>
+                        <Text>{isLogin ? "Omkar" : "Sign in"}</Text>
                       </PopoverTrigger>
                       <Portal>
-                        {/* <PopoverContent>
-                          <PopoverArrow />
-                          <PopoverBody>
-                            <Text>
-                              Members can access discounts and special features
-                            </Text>
-                            <br />
-                            <Button colorScheme="blue">Sign in</Button>
-                            <br />
-                            <br />
-                            <Link to="">Create a free account</Link>
-                            <br />
-                            <br />
-                            <Link to="/favourite">Lists of favourites</Link>
-                            <br />
-                            <Text>Expedia rewards</Text>
-                          </PopoverBody>
-                          <PopoverFooter>Feedback</PopoverFooter>
-                        </PopoverContent> */}
-                        <PopoverContent>
-                          <PopoverArrow />
-                          <PopoverHeader>
-                            <Center mb="2">
-                              <Heading size="md">Hi, Omkar</Heading>
-                            </Center>
-                            <Center mb="2">
-                              <Heading as="h6" size="xs">
-                                omkarpasalkar2020@gmail.com
-                              </Heading>
-                            </Center>
-                            <Center mb="2">
-                              <Tag variant="solid" colorScheme="blue">
-                                Blue Member
-                              </Tag>
-                            </Center>
-                          </PopoverHeader>
-                          <PopoverBody>
-                            <Link to="">Account</Link>
-                            <br />
-                            <br />
-                            <Link to="/favourite">Lists of favourites</Link>
-                            <br />
-                            <Text>Feedback</Text>
-                          </PopoverBody>
-                          <PopoverFooter>
-                            <Center>
-                              <Button w="100%" colorScheme="blue">
-                                Sign out
+                        {isLogin ? (
+                          <PopoverContent>
+                            <PopoverArrow />
+                            <PopoverHeader>
+                              <Center mb="2">
+                                <Heading size="md">Hi, Omkar</Heading>
+                              </Center>
+                              <Center mb="2">
+                                <Heading as="h6" size="xs">
+                                  omkarpasalkar2020@gmail.com
+                                </Heading>
+                              </Center>
+                              <Center mb="2">
+                                <Tag variant="solid" colorScheme="blue">
+                                  Blue Member
+                                </Tag>
+                              </Center>
+                            </PopoverHeader>
+                            <PopoverBody>
+                              <Link to="/account">Account</Link>
+                              <br />
+                              <Link to="/favourite">Lists of favourites</Link>
+                              <br />
+                              <Text>Feedback</Text>
+                            </PopoverBody>
+                            <PopoverFooter>
+                              <Center>
+                                <Button w="100%" colorScheme="blue">
+                                  Sign out
+                                </Button>
+                              </Center>
+                            </PopoverFooter>
+                          </PopoverContent>
+                        ) : (
+                          <PopoverContent>
+                            <PopoverArrow />
+                            <PopoverBody>
+                              <Text mt={5}>
+                                Members can access discounts and special
+                                features
+                              </Text>
+                              <Button
+                                mt={5}
+                                w="100%"
+                                colorScheme="blue"
+                                onClick={() => Navigate("/signin")}
+                              >
+                                Sign in
                               </Button>
-                            </Center>
-                          </PopoverFooter>
-                        </PopoverContent>
+                              <Link to="/signup" mt={5}>
+                                <Text>Create a free account</Text>
+                              </Link>
+                              <Link mt={5} to="/favourite">
+                                <Text>Lists of favourites</Text>
+                              </Link>
+                              <Link to="/reward" mt={5}>
+                                <Text>Expedia rewards</Text>
+                              </Link>
+                            </PopoverBody>
+                            <PopoverFooter>
+                              <Link to="/feedback" mt={5}>
+                                <Text>Feedback</Text>
+                              </Link>
+                            </PopoverFooter>
+                          </PopoverContent>
+                        )}
                       </Portal>
                     </Popover>
                   </Text>
@@ -214,7 +231,9 @@ function Navbar() {
                             Members can access discounts and special features
                           </Text>
                           <br />
-                          <Button colorScheme="blue">Sign in</Button>
+                          <Button colorScheme="blue" w="100%">
+                            Sign in
+                          </Button>
                           <br />
                           <br />
                           <Link to="">Create a free account</Link>
