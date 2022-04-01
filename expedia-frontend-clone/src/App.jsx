@@ -1,9 +1,12 @@
-import "./App.css";
-
+import Navbar from "./Components/Navbar/Navbar";
+import Footer from "./Components/Footer/Footer";
+import AllRoutes from "./Components/Routes";
 function App() {
   return (
     <div className="App">
-      <h1>App</h1>
+      <Navbar />
+      <AllRoutes />
+      <Footer />
     </div>
   );
 }
