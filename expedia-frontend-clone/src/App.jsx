@@ -1,9 +1,9 @@
-import Navbar from "./Components/Navbar/Navbar";
-import Footer from "./Components/Footer/Footer";
-import AllRoutes from "./Components/Routes";
+import Navbar from './components/Navbar/Navbar';
+import Footer from './components/Footer/Footer';
+import AllRoutes from './components/Routes';
 function App() {
   return (
-    <div className="App">
+    <div className='App'>
       <Navbar />
       <AllRoutes />
       <Footer />

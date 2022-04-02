@@ -1,4 +1,10 @@
-import { Input, Button, HStack, useNumberInput } from "@chakra-ui/react";
+import {
+  Input,
+  Button,
+  HStack,
+  useNumberInput,
+  NumberInputF,
+} from '@chakra-ui/react';
 
 export const Counter = ({ step, defaultValue, min, precision }) => {
   const { getInputProps, getIncrementButtonProps, getDecrementButtonProps } =
@@ -13,11 +19,15 @@ export const Counter = ({ step, defaultValue, min, precision }) => {
   const dec = getDecrementButtonProps();
   const input = getInputProps({ isReadOnly: true });
 
+  const handleChange = () => {
+    console.log('changing');
+  };
+
   return (
     <>
-      <HStack w="150px" m={2}>
+      <HStack w='150px' m={2}>
         <Button {...inc}>+</Button>
-        <Input {...input} />
+        <Input {...input} onChange={handleChange} />
         <Button {...dec}>-</Button>
       </HStack>
     </>
