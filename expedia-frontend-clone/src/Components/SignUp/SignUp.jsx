@@ -27,6 +27,20 @@ function SignUp() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(userData);
+    axios
+      .post(`${API()}/auth`, {
+        email: userData.email,
+        firstName: userData.firstName,
+        lastName: userData.lastName,
+        password: userData.password,
+      })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((e) => {
+        alert("hey");
+        console.log(e);
+      });
     setUserData({
       email: "",
       firstName: "",
