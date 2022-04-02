@@ -11,12 +11,16 @@ import {
   Heading,
   useMediaQuery,
 } from "@chakra-ui/react";
+import { useDispatch, useSelector } from "react-redux";
+import { isLogin } from "../../Redux/logger/action";
 
 function SignIn() {
   const [userData, setUserData] = useState({
     email: "",
     password: "",
   });
+  const dispatch = useDispatch();
+
   const [isLargerThan992] = useMediaQuery("(min-width: 992px)");
   const onChangeInput = (e) => {
     const { id, value } = e.target;
@@ -25,9 +29,19 @@ function SignIn() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(userData);
-    axios.post(`${API()}/auth/login`, { userData }).then((res) => {
-      console.log(res.data);
-    });
+    axios
+      .post(`${API()}/auth/login`, {
+        email: userData.email,
+        password: userData.password,
+      })
+      .then((res) => {
+        localStorage.setItem("loginUser", JSON.stringify(res.data));
+        dispatch(isLogin(res.data));
+        console.log(res.data);
+      })
+      .catch((e) => {
+        alert(e.message);
+      });
     // setUserData({
     //   email: "",
     //   password: "",

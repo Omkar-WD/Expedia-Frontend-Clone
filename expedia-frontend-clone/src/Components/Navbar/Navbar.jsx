@@ -34,13 +34,13 @@ import {
   Tag,
 } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom";
-
-const isLogin = false;
+import { useDispatch, useSelector } from "react-redux";
 
 function Navbar() {
   const [isLargerThan1280] = useMediaQuery("(min-width: 992px)");
   const [isLargerThan576] = useMediaQuery("(min-width: 576px)");
   const Navigate = useNavigate();
+  const isLoginObj = useSelector((store) => store.isLogin.isLogin);
   return (
     <>
       <Box
@@ -108,10 +108,14 @@ function Navbar() {
                   <Text>
                     <Popover>
                       <PopoverTrigger>
-                        <Text>{isLogin ? "Omkar" : "Sign in"}</Text>
+                        <Text>
+                          {isLoginObj.token !== ""
+                            ? isLoginObj.user.firstName
+                            : "Sign in"}
+                        </Text>
                       </PopoverTrigger>
                       <Portal>
-                        {isLogin ? (
+                        {isLoginObj.token !== "" ? (
                           <PopoverContent>
                             <PopoverArrow />
                             <PopoverHeader>
