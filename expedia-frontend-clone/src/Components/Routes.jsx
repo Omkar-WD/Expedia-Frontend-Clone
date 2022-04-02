@@ -21,7 +21,7 @@ function AllRoutes() {
       <Route path="/signup" element={<SignUp />}></Route>
       <Route path="/signin" element={<SignIn />}></Route>
       <Route path="/account" element={<ProfileEdit />}></Route>
-      <Route path="/payment" element={<Payment />}></Route>
+      <Route path="/payment/:id" element={<Payment />}></Route>
       <Route path="*" element={<NotFound />}></Route>
     </Routes>
   );

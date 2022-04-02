@@ -54,7 +54,6 @@ function Main() {
 
     const onChangeInput = (e) => {
       const { id, value } = e.target;
-      console.log(id, value);
       setStayData({ ...stayData, [id]: value });
     };
 
@@ -152,7 +151,7 @@ function Main() {
                   <PopoverHeader>Travellers</PopoverHeader>
                   <PopoverCloseButton />
                   <PopoverBody>
-                    <Flex align="center" gap="4" justify="space-between">
+                    {/* <Flex align="center" gap="4" justify="space-between">
                       <Text>Room</Text>
                       <HStack w="150px" m={2}>
                         <Button
@@ -175,7 +174,7 @@ function Main() {
                           -
                         </Button>
                       </HStack>
-                    </Flex>
+                    </Flex> */}
                     <Flex align="center" gap="4" justify="space-between">
                       <Text>Adults </Text>
                       <HStack w="150px" m={2}>
@@ -229,11 +228,6 @@ function Main() {
                       </HStack>
                     </Flex>
                   </PopoverBody>
-                  <PopoverFooter>
-                    <Button w="100%" colorScheme="blue">
-                      Done
-                    </Button>
-                  </PopoverFooter>
                 </PopoverContent>
               </Portal>
             </Popover>
@@ -242,7 +236,8 @@ function Main() {
         <Button
           colorScheme="blue"
           onClick={(e) => {
-            redirect(e);
+            console.log(stayData);
+            // redirect(e);
           }}
         >
           Search

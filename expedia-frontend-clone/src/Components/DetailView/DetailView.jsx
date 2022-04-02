@@ -1,6 +1,6 @@
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FaSpa, FaSnowflake, FaBusinessTime } from "react-icons/fa";
 import { RiParkingFill } from "react-icons/ri";
@@ -32,10 +32,12 @@ import {
   useMediaQuery,
   Button,
   Spinner,
+  useToast,
 } from "@chakra-ui/react";
 import { StarIcon } from "@chakra-ui/icons";
 import IconWithText from "../IconWithText";
 import API from "../../API";
+import { useSelector } from "react-redux";
 
 const amenitiesLeft = [
   {
@@ -122,10 +124,13 @@ const cleaningAndSafetyPracticesRight = [
 
 function DetailView() {
   const [isLargerThan768] = useMediaQuery("(min-width: 769px)");
+  const isLoginObj = useSelector((store) => store.isLogin.isLogin);
   const [hotelData, setHotelData] = useState({
     images: [],
   });
   const { id } = useParams();
+  const toast = useToast();
+  const Navigate = useNavigate();
 
   useEffect(() => {
     axios.get(`${API()}/hotel/${id}`).then((res) => {
@@ -133,6 +138,20 @@ function DetailView() {
       setHotelData(x);
     });
   }, [id]);
+
+  const handleReserve = () => {
+    {
+      isLoginObj.token !== ""
+        ? Navigate(`/payment/${id}`)
+        : toast({
+            title: "Please Login !!!",
+            status: "info",
+            duration: 2000,
+            isClosable: true,
+            position: "top",
+          });
+    }
+  };
 
   return (
     <Box w="100%">
@@ -218,11 +237,9 @@ function DetailView() {
             </Box>
             <Box w={isLargerThan768 ? "40%" : "90%"}>
               <Box p={3}>
-                <Link to="/payment">
-                  <Button w="100%" colorScheme="blue">
-                    Reserve
-                  </Button>
-                </Link>
+                <Button w="100%" colorScheme="blue" onClick={handleReserve}>
+                  Reserve
+                </Button>
               </Box>
               <Box p="3">
                 <AspectRatio
