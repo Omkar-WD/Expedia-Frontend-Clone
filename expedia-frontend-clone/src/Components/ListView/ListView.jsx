@@ -18,15 +18,23 @@ import {
   Radio,
   RadioGroup,
   Select,
+  Spinner,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { Card } from "../HotelCard/Card";
 import API from "../../API";
+import { useParams } from "react-router-dom";
 
 function ListView() {
   const [arr, setArr] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const { cityName } = useParams();
+  console.log(cityName);
 
   useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
     axios.get(`${API()}/hotel`).then((res) => {
       setArr(res.data);
     });
@@ -58,25 +66,47 @@ function ListView() {
   const [isLargerThan492] = useMediaQuery("(min-width: 492px)");
   return (
     <>
-      <Container maxW="container.xl" mt="3">
-        <Center>
-          <Flex w={isLargerThan768 ? "50%" : "90%"} gap="2" direction="column">
-            <InputGroup>
-              <InputLeftAddon children={isLargerThan492 ? "Going to" : "GT"} />
-              <Input placeholder="Enter a location" />
-            </InputGroup>
-            <InputGroup>
-              <InputLeftAddon children={isLargerThan492 ? "Check-in" : "CI"} />
-              <Input type="date" placeholder="Basic usage" />
-            </InputGroup>
-            <InputGroup>
-              <InputLeftAddon children={isLargerThan492 ? "Check-out" : "CO"} />
-              <Input type="date" placeholder="Basic usage" />
-            </InputGroup>
-            <Button colorScheme="blue">Search</Button>
-          </Flex>
-        </Center>
-      </Container>
+      {isLoading ? (
+        <Flex justify="center" mt={"5"}>
+          <Spinner
+            thickness="5px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="#3182ce"
+            size="lg"
+          />
+        </Flex>
+      ) : (
+        <Container maxW="container.xl" mt="3">
+          <Center>
+            <Flex
+              w={isLargerThan768 ? "50%" : "90%"}
+              gap="2"
+              direction="column"
+            >
+              <InputGroup>
+                <InputLeftAddon
+                  children={isLargerThan492 ? "Going to" : "GT"}
+                />
+                <Input placeholder="Enter a location" />
+              </InputGroup>
+              <InputGroup>
+                <InputLeftAddon
+                  children={isLargerThan492 ? "Check-in" : "CI"}
+                />
+                <Input type="date" placeholder="Basic usage" />
+              </InputGroup>
+              <InputGroup>
+                <InputLeftAddon
+                  children={isLargerThan492 ? "Check-out" : "CO"}
+                />
+                <Input type="date" placeholder="Basic usage" />
+              </InputGroup>
+              <Button colorScheme="blue">Search</Button>
+            </Flex>
+          </Center>
+        </Container>
+      )}
       <Box w="100%" backgroundColor="#f8f5f4" marginTop="50">
         <Container maxW="container.xl" mt="3">
           <Flex justify="center">
@@ -218,11 +248,23 @@ function ListView() {
                   <option value="sort by review">sort by review</option>
                 </Select>
               </Flex>
-              <Flex direction="row" flexWrap="wrap" justify="center" gap={3}>
-                {arr.map((e) => (
-                  <Card key={e._id} data={e} />
-                ))}
-              </Flex>
+              {arr.length > 0 ? (
+                <Flex direction="row" flexWrap="wrap" justify="center" gap={3}>
+                  {arr.map((e) => (
+                    <Card key={e._id} data={e} />
+                  ))}
+                </Flex>
+              ) : (
+                <Flex justify="center" mt={"5"}>
+                  <Spinner
+                    thickness="5px"
+                    speed="0.65s"
+                    emptyColor="gray.200"
+                    color="#3182ce"
+                    size="lg"
+                  />
+                </Flex>
+              )}
             </Box>
           </Flex>
         </Container>

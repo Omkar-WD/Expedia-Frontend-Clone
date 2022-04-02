@@ -32,15 +32,42 @@ import {
   Center,
   Heading,
   Tag,
+  useToast,
 } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { isLogin } from "../../Redux/logger/action";
+import { hoverColor } from "../Variables";
 
 function Navbar() {
   const [isLargerThan1280] = useMediaQuery("(min-width: 992px)");
   const [isLargerThan576] = useMediaQuery("(min-width: 576px)");
   const Navigate = useNavigate();
   const isLoginObj = useSelector((store) => store.isLogin.isLogin);
+  const toast = useToast();
+  const dispatch = useDispatch();
+  const handleSignout = (e) => {
+    localStorage.setItem("loginUser", {
+      token: "",
+      user: { firstName: "", lastName: "", email: "" },
+    });
+    setTimeout(() => {
+      Navigate("/signin");
+    }, 3000);
+    dispatch(
+      isLogin({
+        token: "",
+        user: { firstName: "", lastName: "", email: "" },
+      })
+    );
+    toast({
+      title: "Signout Successfull !!!",
+      status: "success",
+      duration: 2000,
+      isClosable: true,
+      position: "top",
+    });
+  };
   return (
     <>
       <Box
@@ -66,23 +93,50 @@ function Navbar() {
                 </Link>
                 {isLargerThan576 ? (
                   <Menu>
-                    <MenuButton>
+                    <MenuButton _hover={{ color: hoverColor }}>
                       More travel <ChevronDownIcon />
                     </MenuButton>
                     <Portal>
                       <MenuList>
-                        <MenuItem icon={<BsBuilding />}>Stays</MenuItem>
-                        <MenuItem icon={<MdOutlineFlight />}>Flights</MenuItem>
-                        <MenuItem icon={<FaCarSide />}>Cars</MenuItem>
-                        <MenuItem icon={<VscMultipleWindows />}>
+                        <MenuItem
+                          _hover={{ color: hoverColor }}
+                          icon={<BsBuilding />}
+                        >
+                          Stays
+                        </MenuItem>
+                        <MenuItem
+                          _hover={{ color: hoverColor }}
+                          icon={<MdOutlineFlight />}
+                        >
+                          Flights
+                        </MenuItem>
+                        <MenuItem
+                          _hover={{ color: hoverColor }}
+                          icon={<FaCarSide />}
+                        >
+                          Cars
+                        </MenuItem>
+                        <MenuItem
+                          _hover={{ color: hoverColor }}
+                          icon={<VscMultipleWindows />}
+                        >
                           Packages
                         </MenuItem>
-                        <MenuItem icon={<MdOutlineHolidayVillage />}>
+                        <MenuItem
+                          _hover={{ color: hoverColor }}
+                          icon={<MdOutlineHolidayVillage />}
+                        >
                           Holiday activities
                         </MenuItem>
-                        <MenuItem>Deals</MenuItem>
-                        <MenuItem>Groups and meetings</MenuItem>
-                        <MenuItem>Mobile</MenuItem>
+                        <MenuItem _hover={{ color: hoverColor }}>
+                          Deals
+                        </MenuItem>
+                        <MenuItem _hover={{ color: hoverColor }}>
+                          Groups and meetings
+                        </MenuItem>
+                        <MenuItem _hover={{ color: hoverColor }}>
+                          Mobile
+                        </MenuItem>
                       </MenuList>
                     </Portal>
                   </Menu>
@@ -93,19 +147,19 @@ function Navbar() {
             <Box p="4">
               {isLargerThan1280 ? (
                 <Stack direction="row" spacing={8} align="center" p="1">
-                  <Text>
+                  <Text _hover={{ color: hoverColor }}>
                     <Link to="/">
                       <Icon as={BiWorld} w={3.5} h={3.5} />
                       &nbsp; English
                     </Link>
                   </Text>
-                  <Text>
+                  <Text _hover={{ color: hoverColor }}>
                     <Link to="/">Support</Link>
                   </Text>
-                  <Text>
+                  <Text _hover={{ color: hoverColor }}>
                     <Link to="/stays">Trips</Link>
                   </Text>
-                  <Text>
+                  <Text cursor="pointer" _hover={{ color: hoverColor }}>
                     <Popover>
                       <PopoverTrigger>
                         <Text>
@@ -118,13 +172,14 @@ function Navbar() {
                         {isLoginObj.token !== "" ? (
                           <PopoverContent>
                             <PopoverArrow />
+                            <PopoverCloseButton />
                             <PopoverHeader>
                               <Center mb="2">
                                 <Heading size="md">Hi, Omkar</Heading>
                               </Center>
                               <Center mb="2">
                                 <Heading as="h6" size="xs">
-                                  omkarpasalkar2020@gmail.com
+                                  {isLoginObj.user.email}
                                 </Heading>
                               </Center>
                               <Center mb="2">
@@ -142,7 +197,13 @@ function Navbar() {
                             </PopoverBody>
                             <PopoverFooter>
                               <Center>
-                                <Button w="100%" colorScheme="blue">
+                                <Button
+                                  w="100%"
+                                  colorScheme="blue"
+                                  onClick={(e) => {
+                                    handleSignout(e);
+                                  }}
+                                >
                                   Sign out
                                 </Button>
                               </Center>
@@ -151,6 +212,7 @@ function Navbar() {
                         ) : (
                           <PopoverContent>
                             <PopoverArrow />
+                            <PopoverCloseButton />
                             <PopoverBody>
                               <Text mt={5}>
                                 Members can access discounts and special
@@ -165,18 +227,26 @@ function Navbar() {
                                 Sign in
                               </Button>
                               <Link to="/signup" mt={5}>
-                                <Text>Create a free account</Text>
+                                <Text _hover={{ color: hoverColor }}>
+                                  Create a free account
+                                </Text>
                               </Link>
                               <Link mt={5} to="/favourite">
-                                <Text>Lists of favourites</Text>
+                                <Text _hover={{ color: hoverColor }}>
+                                  Lists of favourites
+                                </Text>
                               </Link>
                               <Link to="/reward" mt={5}>
-                                <Text>Expedia rewards</Text>
+                                <Text _hover={{ color: hoverColor }}>
+                                  Expedia rewards
+                                </Text>
                               </Link>
                             </PopoverBody>
                             <PopoverFooter>
                               <Link to="/feedback" mt={5}>
-                                <Text>Feedback</Text>
+                                <Text _hover={{ color: hoverColor }}>
+                                  Feedback
+                                </Text>
                               </Link>
                             </PopoverFooter>
                           </PopoverContent>
@@ -243,7 +313,9 @@ function Navbar() {
                           <Link to="">Create a free account</Link>
                           <br />
                           <br />
-                          <Text>Lists of favourites</Text>
+                          <Text _hover={{ color: hoverColor }}>
+                            Lists of favourites
+                          </Text>
                           <br />
                           <Text>Expedia rewards</Text>
                         </PopoverBody>

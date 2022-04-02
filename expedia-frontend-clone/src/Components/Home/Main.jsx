@@ -22,14 +22,72 @@ import {
   useMediaQuery,
   Flex,
   Text,
+  useCounter,
+  HStack,
+  Spinner,
+  Heading,
 } from "@chakra-ui/react";
-import { Counter } from "../Counter";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { BoxShadow, hoverColor } from "../Variables";
 
 function Main() {
+  const [isLoading, setIsLoading] = useState(true);
   const [isLargerThan768] = useMediaQuery("(min-width: 768px)");
   const [isLargerThan492] = useMediaQuery("(min-width: 492px)");
 
+  const counter = useCounter({
+    max: 10,
+    min: 0,
+    step: 1,
+  });
+
   const Stays = () => {
+    const [stayData, setStayData] = useState({
+      city: "",
+      checkin: "",
+      checkout: "",
+      room: 1,
+      adult: 1,
+      children: 1,
+    });
+
+    const onChangeInput = (e) => {
+      const { id, value } = e.target;
+      console.log(id, value);
+      setStayData({ ...stayData, [id]: value });
+    };
+
+    const onIncrementCounter = (e) => {
+      let { id, value } = e.target;
+      if (value >= 10) {
+        return false;
+      }
+      value = parseInt(value);
+      console.log(value, typeof value);
+      setStayData({ ...stayData, [id]: value + 1 });
+    };
+
+    const onDecrementCounter = (e) => {
+      let { id, value } = e.target;
+      if (
+        (id == "room" && stayData.room <= 1) ||
+        (id == "adult" && stayData.adult <= 1)
+      ) {
+        return false;
+      }
+      if (value <= 0) {
+        return false;
+      }
+      value = parseInt(value);
+      console.log(value, typeof value);
+      setStayData({ ...stayData, [id]: value - 1 });
+    };
+
+    const redirect = (e) => {
+      console.log(`redirecting to /stays/${stayData.city}`);
+    };
+
     return (
       <>
         <Flex
@@ -40,22 +98,52 @@ function Main() {
         >
           <InputGroup>
             <InputLeftAddon children={isLargerThan492 ? "Going to" : "GT"} />
-            <Input placeholder="Enter a location" />
+            <Input
+              value={stayData.city}
+              type="text"
+              id="city"
+              onChange={(e) => {
+                onChangeInput(e);
+              }}
+              placeholder="Enter a location"
+            />
           </InputGroup>
           <InputGroup>
             <InputLeftAddon children={isLargerThan492 ? "Check-in" : "CI"} />
-            <Input type="date" placeholder="Basic usage" />
+            <Input
+              value={stayData.checkin}
+              id="checkin"
+              onChange={(e) => {
+                onChangeInput(e);
+              }}
+              type="date"
+              placeholder="Basic usage"
+            />
           </InputGroup>
           <InputGroup>
             <InputLeftAddon children={isLargerThan492 ? "Check-out" : "CO"} />
-            <Input type="date" placeholder="Basic usage" />
+            <Input
+              value={stayData.checkout}
+              id="checkout"
+              onChange={(e) => {
+                onChangeInput(e);
+              }}
+              type="date"
+              placeholder="Basic usage"
+            />
           </InputGroup>
           <InputGroup>
             <Popover>
               <PopoverTrigger>
                 <Button>
                   Travellers :-{" "}
-                  {isLargerThan492 ? " 1 room , 2 travellers" : "1R , 2T"}
+                  {isLargerThan492
+                    ? ` ${stayData.room} room , ${
+                        stayData.adult + stayData.children
+                      } travellers`
+                    : `${stayData.room}R ,  ${
+                        stayData.adult + stayData.children
+                      }T`}
                 </Button>
               </PopoverTrigger>
               <Portal>
@@ -66,30 +154,79 @@ function Main() {
                   <PopoverBody>
                     <Flex align="center" gap="4" justify="space-between">
                       <Text>Room</Text>
-                      <Counter
-                        step={1}
-                        defaultValue={1}
-                        min={1}
-                        precision={0}
-                      />
+                      <HStack w="150px" m={2}>
+                        <Button
+                          id="room"
+                          value={stayData.room}
+                          onClick={(e) => {
+                            onIncrementCounter(e);
+                          }}
+                        >
+                          +
+                        </Button>
+                        <Input m={2} value={stayData.room} readOnly={true} />
+                        <Button
+                          id="room"
+                          value={stayData.room}
+                          onClick={(e) => {
+                            onDecrementCounter(e);
+                          }}
+                        >
+                          -
+                        </Button>
+                      </HStack>
                     </Flex>
                     <Flex align="center" gap="4" justify="space-between">
                       <Text>Adults </Text>
-                      <Counter
-                        step={1}
-                        defaultValue={1}
-                        min={1}
-                        precision={0}
-                      />
+                      <HStack w="150px" m={2}>
+                        <Button
+                          id="adult"
+                          value={stayData.adult}
+                          onClick={(e) => {
+                            onIncrementCounter(e);
+                          }}
+                        >
+                          +
+                        </Button>
+                        <Input m={2} value={stayData.adult} readOnly={true} />
+                        <Button
+                          id="adult"
+                          value={stayData.adult}
+                          onClick={(e) => {
+                            onDecrementCounter(e);
+                          }}
+                        >
+                          -
+                        </Button>
+                      </HStack>
                     </Flex>
                     <Flex align="center" gap="4" justify="space-between">
                       <Text>Children</Text>
-                      <Counter
-                        step={1}
-                        defaultValue={0}
-                        min={0}
-                        precision={0}
-                      />
+                      <HStack w="150px" m={2}>
+                        <Button
+                          id="children"
+                          value={stayData.children}
+                          onClick={(e) => {
+                            onIncrementCounter(e);
+                          }}
+                        >
+                          +
+                        </Button>
+                        <Input
+                          m={2}
+                          value={stayData.children}
+                          readOnly={true}
+                        />
+                        <Button
+                          id="children"
+                          value={stayData.children}
+                          onClick={(e) => {
+                            onDecrementCounter(e);
+                          }}
+                        >
+                          -
+                        </Button>
+                      </HStack>
                     </Flex>
                   </PopoverBody>
                   <PopoverFooter>
@@ -102,7 +239,14 @@ function Main() {
             </Popover>
           </InputGroup>
         </Flex>
-        <Button colorScheme="blue">Search</Button>
+        <Button
+          colorScheme="blue"
+          onClick={(e) => {
+            redirect(e);
+          }}
+        >
+          Search
+        </Button>
       </>
     );
   };
@@ -203,90 +347,167 @@ function Main() {
       </>
     );
   };
+  const TabSection = ({ name }) => {
+    return (
+      <Tab
+        _selected={{
+          boxShadow: "none",
+          borderBottom: "2px solid blue",
+          color: hoverColor,
+        }}
+        _hover={{ borderBottom: "1px solid blue", color: hoverColor }}
+      >
+        {name}
+      </Tab>
+    );
+  };
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
+  }, []);
 
   return (
     <Container maxW="container.xl">
-      <Box
-        border="1px"
-        borderColor="gray.200"
-        borderRadius="10px"
-        overflow={"hidden"}
-        marginTop="50"
-        boxShadow="md"
-      >
-        <Tabs align="center">
-          <TabList w="90%">
+      {isLoading ? (
+        <Flex justify="center" mt={"5"}>
+          <Spinner
+            thickness="5px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="#3182ce"
+            size="lg"
+          />
+        </Flex>
+      ) : (
+        <>
+          <Box
+            border="1px"
+            borderColor="gray.200"
+            borderRadius="10px"
+            overflow={"hidden"}
+            marginTop="50"
+            boxShadow={BoxShadow}
+          >
+            <Tabs align="center">
+              <TabList w="90%">
+                <Flex
+                  flexWrap="wrap"
+                  justify="center"
+                  gap={isLargerThan768 ? "2" : null}
+                >
+                  <TabSection name={"Stays"} />
+                  <TabSection name={"Flights"} />
+                  <TabSection name={"Cars"} />
+                  <TabSection name={"Packages"} />
+                  <TabSection name={"Things to do"} />
+                </Flex>
+              </TabList>
+              <TabPanels>
+                <TabPanel>
+                  <Stays />
+                </TabPanel>
+                <TabPanel>
+                  <Flights />
+                </TabPanel>
+                <TabPanel>
+                  <Cars />
+                </TabPanel>
+                <TabPanel>
+                  <Packages />
+                </TabPanel>
+                <TabPanel>
+                  <Stays />
+                </TabPanel>
+              </TabPanels>
+            </Tabs>
+          </Box>
+          <Container
+            boxShadow={BoxShadow}
+            maxW="container.xl"
+            mt="50px"
+            borderRadius="10px"
+            bgImage="url('https://a.travel-assets.com/travel-assets-manager/ux-887/Global-HP-Hero-928x398.jpg')"
+            bgPosition="center"
+            bgRepeat="no-repeat"
+            bgSize="cover"
+          >
             <Flex
-              flexWrap="wrap"
+              h="400px"
+              direction="column"
+              gap={10}
               justify="center"
-              gap={isLargerThan768 ? "2" : null}
+              align="center"
+              p={5}
+              textAlign="center"
+              color="white"
+              textShadow="0 0 20px black"
+              fontWeight="bold"
             >
-              <Tab
-                _selected={{
-                  boxShadow: "none",
-                  borderBottom: "2px solid blue",
-                }}
-                _hover={{ borderBottom: "1px solid blue" }}
-              >
-                Stays
-              </Tab>
-              <Tab
-                _selected={{
-                  boxShadow: "none",
-                  borderBottom: "2px solid blue",
-                }}
-                _hover={{ borderBottom: "1px solid blue" }}
-              >
-                Flights
-              </Tab>
-              <Tab
-                _selected={{
-                  boxShadow: "none",
-                  borderBottom: "2px solid blue",
-                }}
-                _hover={{ borderBottom: "1px solid blue" }}
-              >
-                Cars
-              </Tab>
-              <Tab
-                _selected={{
-                  boxShadow: "none",
-                  borderBottom: "2px solid blue",
-                }}
-                _hover={{ borderBottom: "1px solid blue" }}
-              >
-                Packages
-              </Tab>
-              <Tab
-                _selected={{
-                  boxShadow: "none",
-                  borderBottom: "2px solid blue",
-                }}
-                _hover={{ borderBottom: "1px solid blue" }}
-              >
-                Things to do
-              </Tab>
+              <Box>
+                <Heading as="h1" color="white">
+                  Save instantly with Expedia Rewards
+                </Heading>
+              </Box>
+              <Box>
+                <Text color="white" fontSize="xl">
+                  You can enjoy access to perks like Member Prices, saving you
+                  10% or more on select hotels. Terms may apply.
+                </Text>
+              </Box>
+              <Box>
+                <Link to="/" mb="5%" mt="2%" w="200px" size="lg">
+                  <Button
+                    mb="5%"
+                    mt="2%"
+                    w="200px"
+                    colorScheme="blue"
+                    size="lg"
+                  >
+                    See Member Prices
+                  </Button>
+                </Link>
+              </Box>
             </Flex>
-          </TabList>
-          <TabPanels>
-            <TabPanel>
-              <Stays />
-            </TabPanel>
-            <TabPanel>
-              <Flights />
-            </TabPanel>
-            <TabPanel>
-              <Cars />
-            </TabPanel>
-            <TabPanel>
-              <Packages />
-            </TabPanel>
-            <TabPanel>
-              <Stays />
-            </TabPanel>
-          </TabPanels>
-        </Tabs>
-      </Box>
+          </Container>
+          <Container
+            boxShadow={BoxShadow}
+            maxW="container.xl"
+            borderRadius="10px"
+            bgImage="url('https://a.travel-assets.com/travel-assets-manager/gmvd-1482-bookearly-emea/667x320.jpg')"
+            bgPosition="center"
+            bgRepeat="no-repeat"
+            bgSize="cover"
+            mt={"50px"}
+            h={"300px"}
+          >
+            <Flex
+              h="400px"
+              direction="column"
+              justify="center"
+              align="center"
+              p={5}
+              textAlign="center"
+              color="white"
+              textShadow="0 0 20px black"
+              fontWeight="bold"
+              gap={"30px"}
+            >
+              <Box>
+                <Heading as="h3" color="white" fontSize="20px">
+                  Plan ahead and save
+                </Heading>
+              </Box>
+              <Box>
+                <Heading as="h3" color="white" fontSize="20px">
+                  Book 60 days in advance for 20% off seletct stays.
+                </Heading>
+              </Box>
+            </Flex>
+          </Container>
+        </>
+      )}
     </Container>
   );
 }

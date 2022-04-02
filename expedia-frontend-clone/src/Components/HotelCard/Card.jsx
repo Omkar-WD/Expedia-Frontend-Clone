@@ -11,12 +11,16 @@ import {
   Heading,
   Spacer,
   Icon,
+  useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
 import API from "../../API";
+import { BoxShadow } from "../Variables";
 
 export const Card = ({ data }) => {
   const [isFav, setIsFav] = useState(false);
+  const toast = useToast();
+  console.log(data);
   const handleIconClick = () => {
     {
       isFav
@@ -26,7 +30,13 @@ export const Card = ({ data }) => {
               hotelId: _id,
             })
             .then((res) => {
-              console.log(res.data);
+              toast({
+                title: "Remove From Favourite !!!",
+                status: "warning",
+                duration: 2000,
+                isClosable: true,
+                position: "top",
+              });
             })
         : axios
             .post(`${API()}/favourite`, {
@@ -34,7 +44,13 @@ export const Card = ({ data }) => {
               hotelId: _id,
             })
             .then((res) => {
-              console.log(res.data);
+              toast({
+                title: "Added To Favourite !!!",
+                status: "success",
+                duration: 2000,
+                isClosable: true,
+                position: "top",
+              });
             });
     }
     setIsFav(!isFav);
@@ -65,7 +81,7 @@ export const Card = ({ data }) => {
       marginTop="25"
       marginBottom="25"
       cursor="pointer"
-      boxShadow="md"
+      boxShadow={BoxShadow}
       _hover={{
         boxShadow:
           "rgba(0, 0, 0, 0.16) 0px 1px 4px, rgb(51, 51, 51) 0px 0px 0px 3px",

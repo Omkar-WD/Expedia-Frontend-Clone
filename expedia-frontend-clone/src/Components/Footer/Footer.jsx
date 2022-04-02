@@ -10,7 +10,18 @@ import {
   Spacer,
 } from "@chakra-ui/react";
 
+import { hoverColor } from "../Variables";
+
 function Footer() {
+  const MenuItem = ({ name, link }) => {
+    return (
+      <Text fontSize="xs" textAlign={"left"} _hover={{ color: hoverColor }}>
+        <a href={link} target="_blank" rel="noreferrer">
+          {name}
+        </a>
+      </Text>
+    );
+  };
   return (
     <Container maxW="container.xl">
       <Box mt="50" mb="50" p="1">
@@ -27,42 +38,26 @@ function Footer() {
               <Heading as="h6" size="xs" textAlign={"left"}>
                 Company
               </Heading>
-              <Text fontSize="xs" textAlign={"left"}>
-                <a
-                  href="https://www.expedia.co.in/lp/b/about"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  About us
-                </a>
-              </Text>
-              <Text fontSize="xs" textAlign={"left"}>
-                <a
-                  href="https://lifeatexpediagroup.com/"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Jobs
-                </a>
-              </Text>
-              <Text fontSize="xs" textAlign={"left"}>
-                <a
-                  href="https://apps.expediapartnercentral.com/en_GB/list?utm_medium=referral&utm_source=wwwexpediacoin-en_GB&utm_campaign=HomePage&utm_contentewd=footer-btn&siteId=27&tpid=27&eapid=0&langId=2057"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  List your property
-                </a>
-              </Text>
-              <Text fontSize="xs" textAlign={"left"}>
-                <a
-                  href="https://www.expediagroup.com/partner-with-us/default.aspx"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Partnerships
-                </a>
-              </Text>
+              <MenuItem
+                link={"https://www.expedia.co.in/lp/b/about"}
+                name={"About us"}
+              />
+              <MenuItem
+                link={"https://lifeatexpediagroup.com/"}
+                name={"Jobs"}
+              />
+              <MenuItem
+                link={
+                  "https://apps.expediapartnercentral.com/en_GB/list?utm_medium=referral&utm_source=wwwexpediacoin-en_GB&utm_campaign=HomePage&utm_contentewd=footer-btn&siteId=27&tpid=27&eapid=0&langId=2057"
+                }
+                name={"List your property"}
+              />
+              <MenuItem
+                link={
+                  "https://www.expediagroup.com/partner-with-us/default.aspx"
+                }
+                name={"Partnerships"}
+              />
             </Stack>
           </Box>
           <Spacer />
@@ -71,78 +66,48 @@ function Footer() {
               <Heading as="h6" size="xs" textAlign={"left"}>
                 Explore
               </Heading>
-              <Text fontSize="xs" textAlign={"left"} margin-top={"2px"}>
-                <a
-                  href="https://www.expedia.co.in/India.dx80"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  India travel guide
-                </a>
-              </Text>
-              <Text fontSize="xs" textAlign={"left"}>
-                <a
-                  href="https://www.expedia.co.in/Destinations-In-India.d80.Hotel-Destinations"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Hotels in India
-                </a>
-              </Text>
-              <Text fontSize="xs" textAlign={"left"}>
-                <a
-                  href="https://www.expedia.co.in/Destinations-In-India.d80.Holiday-Rental-Destinations"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Holiday rentals in India
-                </a>
-              </Text>
-              <Text fontSize="xs" textAlign={"left"}>
-                <a
-                  href="https://www.expedia.co.in/India.d80.Holidays-City-Breaks"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Holiday packages in India
-                </a>
-              </Text>
-              <Text fontSize="xs" textAlign={"left"}>
-                <a
-                  href="https://www.expedia.co.in/Destinations-In-India.d80.Flight-Destinations"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Domestic flights
-                </a>
-              </Text>
-              <Text fontSize="xs" textAlign={"left"}>
-                <a
-                  href="https://www.expedia.co.in/Destinations-In-India.d80.Car-Hire-Destinations"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Car hire in India
-                </a>
-              </Text>
-              <Text fontSize="xs" textAlign={"left"}>
-                <a
-                  href="https://www.expedia.co.in/Accommodation"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  All accommodation types
-                </a>
-              </Text>
-              <Text fontSize="xs" textAlign={"left"}>
-                <a
-                  href="https://travelblog.expedia.co.in/"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Travel blog
-                </a>
-              </Text>
+              <MenuItem
+                link={"https://www.expedia.co.in/India.dx80"}
+                name={"India travel guide"}
+              />
+              <MenuItem
+                link={
+                  "https://www.expedia.co.in/Destinations-In-India.d80.Hotel-Destinations"
+                }
+                name={"Hotels in India"}
+              />
+              <MenuItem
+                link={
+                  "https://www.expedia.co.in/Destinations-In-India.d80.Holiday-Rental-Destinations"
+                }
+                name={"Holiday rentals in India"}
+              />
+              <MenuItem
+                link={
+                  "https://www.expedia.co.in/India.d80.Holidays-City-Breaks"
+                }
+                name={" Holiday packages in India"}
+              />
+              <MenuItem
+                link={
+                  "https://www.expedia.co.in/Destinations-In-India.d80.Flight-Destinations"
+                }
+                name={"Domestic flights"}
+              />
+              <MenuItem
+                link={
+                  "https://www.expedia.co.in/Destinations-In-India.d80.Car-Hire-Destinations"
+                }
+                name={"Car hire in India"}
+              />
+              <MenuItem
+                link={"https://www.expedia.co.in/Accommodation"}
+                name={"All accommodation types"}
+              />
+              <MenuItem
+                link={"https://travelblog.expedia.co.in/"}
+                name={"Travel blog"}
+              />
             </Stack>
           </Box>
           <Spacer />
@@ -151,33 +116,20 @@ function Footer() {
               <Heading as="h6" size="xs" textAlign={"left"}>
                 Terms and policies
               </Heading>
-              <Text fontSize="xs" textAlign={"left"}>
-                <a
-                  href="https://www.expedia.co.in/lp/lg-privacypolicy"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Privacy Statement
-                </a>
-              </Text>
-              <Text fontSize="xs" textAlign={"left"}>
-                <a
-                  href="https://www.expedia.co.in/lp/lg-termsofuse"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Terms of use
-                </a>
-              </Text>
-              <Text fontSize="xs" textAlign={"left"}>
-                <a
-                  href="https://www.vrbo.com/en-au/legal/traveller-terms-and-conditions"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Vrbo terms and conditions
-                </a>
-              </Text>
+              <MenuItem
+                link={"https://www.expedia.co.in/lp/lg-privacypolicy"}
+                name={"Privacy Statement"}
+              />
+              <MenuItem
+                link={"https://www.expedia.co.in/lp/lg-termsofuse"}
+                name={"Terms of use"}
+              />
+              <MenuItem
+                link={
+                  "https://www.vrbo.com/en-au/legal/traveller-terms-and-conditions"
+                }
+                name={" Vrbo terms and conditions"}
+              />
             </Stack>
           </Box>
           <Spacer />
@@ -186,51 +138,34 @@ function Footer() {
               <Heading as="h6" size="xs" textAlign={"left"}>
                 Help
               </Heading>
-              <Text fontSize="xs" textAlign={"left"}>
-                <a
-                  href="https://www.expedia.co.in/service/"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Support
-                </a>
-              </Text>
-              <Text fontSize="xs" textAlign={"left"}>
-                <a
-                  href="https://www.expedia.co.in/service/#/articles/767/34/19798"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Change or cancel your booking
-                </a>
-              </Text>
-              <Text fontSize="xs" textAlign={"left"}>
-                <a
-                  href="https://www.expedia.co.in/service/#/articles/767/741/19795"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Refund process and timelines
-                </a>
-              </Text>
-              <Text fontSize="xs" textAlign={"left"}>
-                <a
-                  href="https://www.expedia.co.in/service/#/articles/767/34/25812"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Book a flight using an airline credit
-                </a>
-              </Text>
-              <Text fontSize="xs" textAlign={"left"}>
-                <a
-                  href="https://www.expedia.co.in/service/#/articles/767/52/19788"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  International travel documents
-                </a>
-              </Text>
+              <MenuItem
+                link={"https://www.expedia.co.in/service/"}
+                name={"Support"}
+              />
+              <MenuItem
+                link={
+                  "https://www.expedia.co.in/service/#/articles/767/34/19798"
+                }
+                name={"Change or cancel your booking"}
+              />
+              <MenuItem
+                link={
+                  "https://www.expedia.co.in/service/#/articles/767/741/19795"
+                }
+                name={"Refund process and timelines"}
+              />
+              <MenuItem
+                link={
+                  "https://www.expedia.co.in/service/#/articles/767/34/25812"
+                }
+                name={" Book a flight using an airline credit"}
+              />
+              <MenuItem
+                link={
+                  "https://www.expedia.co.in/service/#/articles/767/52/19788"
+                }
+                name={" International travel documents"}
+              />
             </Stack>
           </Box>
         </Flex>
