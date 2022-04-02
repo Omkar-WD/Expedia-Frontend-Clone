@@ -21,16 +21,39 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import { Card } from "../HotelCard/Card";
+import API from "../../API";
 
 function ListView() {
   const [arr, setArr] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:8080/citiesData").then((res) => {
+    axios.get(`${API()}/hotel`).then((res) => {
       setArr(res.data);
     });
   }, []);
 
+  const handlefilter = (e) => {
+    const { value } = e.target;
+    if (value == "sort by rating") {
+      arr.sort((a, b) => {
+        if (a.rating > b.rating) return -1;
+        return 1;
+      });
+      setArr([...arr]);
+    } else if (value == "sort by price") {
+      arr.sort((a, b) => {
+        if (Number(a.offerPrice) - Number(b.offerPrice)) return 1;
+        return -1;
+      });
+      setArr([...arr]);
+    } else if (value == "sort by review") {
+      arr.sort((a, b) => {
+        if (Number(a.reviewCount) - Number(b.reviewCount)) return -1;
+        return 1;
+      });
+      setArr([...arr]);
+    }
+  };
   const [isLargerThan768] = useMediaQuery("(min-width: 768px)");
   const [isLargerThan492] = useMediaQuery("(min-width: 492px)");
   return (
@@ -183,15 +206,21 @@ function ListView() {
             ) : null}
             <Box w={isLargerThan768 ? "70%" : "90%"}>
               <Flex justify="right" p={3}>
-                <Select placeholder="Select option" w="20%" bgColor={"white"}>
-                  <option value="option1">sort by rating</option>
-                  <option value="option2">sort by price</option>
-                  <option value="option3">sort by review</option>
+                <Select
+                  placeholder="Select option"
+                  id="filter"
+                  onChange={(e) => handlefilter(e)}
+                  w="20%"
+                  bgColor={"white"}
+                >
+                  <option value="sort by rating">sort by rating</option>
+                  <option value="sort by price">sort by price</option>
+                  <option value="sort by review">sort by review</option>
                 </Select>
               </Flex>
               <Flex direction="row" flexWrap="wrap" justify="center" gap={3}>
                 {arr.map((e) => (
-                  <Card key={e.id} data={e} />
+                  <Card key={e._id} data={e} />
                 ))}
               </Flex>
             </Box>
