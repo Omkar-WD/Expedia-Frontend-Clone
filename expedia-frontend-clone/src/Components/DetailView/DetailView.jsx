@@ -1,6 +1,6 @@
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import { FaSpa, FaSnowflake, FaBusinessTime } from "react-icons/fa";
 import { RiParkingFill } from "react-icons/ri";
@@ -31,6 +31,7 @@ import {
   AspectRatio,
   useMediaQuery,
   Button,
+  Spinner,
 } from "@chakra-ui/react";
 import { StarIcon } from "@chakra-ui/icons";
 import IconWithText from "../IconWithText";
@@ -217,9 +218,11 @@ function DetailView() {
             </Box>
             <Box w={isLargerThan768 ? "40%" : "90%"}>
               <Box p={3}>
-                <Button w="100%" colorScheme="blue">
-                  Reserve
-                </Button>
+                <Link to="/payment">
+                  <Button w="100%" colorScheme="blue">
+                    Reserve
+                  </Button>
+                </Link>
               </Box>
               <Box p="3">
                 <AspectRatio
@@ -258,7 +261,15 @@ function DetailView() {
           </Flex>
         </Container>
       ) : (
-        ""
+        <Flex justify="center" mt={"5"}>
+          <Spinner
+            thickness="5px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="#3182ce"
+            size="lg"
+          />
+        </Flex>
       )}
     </Box>
   );
