@@ -4,9 +4,20 @@
 Expedia.co.in is an online travel agency owned by Expedia Group, an Indian online travel shopping company based in Place. The website and mobile app can be used to book airline tickets, hotel reservations, car rentals, cruise ships, and vacation packages.
 
 ## 🛠 Tech Stack
+<img src="https://cdn-icons-png.flaticon.com/512/1199/1199124.png" width=20/> JavaScript
 
-<img src="https://cdn-icons-png.flaticon.com/512/226/226269.png" width=20/>JavaScript
-<!-- Javascript, HTML, CSS, NodeJS, ExpressJS, ReactJS, redux, Chakra UI. -->
+<img src="https://cdn-icons-png.flaticon.com/512/919/919825.png" width=20/> NodeJS
+
+<img src="https://cdn-icons-png.flaticon.com/512/1126/1126012.png" width=20/> React
+
+<img src="https://cdn-icons-png.flaticon.com/512/1125/1125259.png" width=20/> Redux
+
+<img src="https://w7.pngwing.com/pngs/925/447/png-transparent-express-js-node-js-javascript-mongodb-node-js-text-trademark-logo-thumbnail.png" width=20/> ExpressJS
+
+<img src="https://imgs.search.brave.com/twNPzAinl9qO4U8URFZBWpC1Dhld-pFLviROBcxcH3E/rs:fit:561:225:1/g:ce/aHR0cHM6Ly90c2Ux/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC44/VDRoZHZEY2lCSk4w/QWZiZnh5a193SGFH/USZwaWQ9QXBp" width=20/> MongoDB
+
+
+<img src="https://imgs.search.brave.com/TdMohCF5jDPE3Qgo94uj5PLnYQRKcFaGq4uklYKnKRI/rs:fit:200:225:1/g:ce/aHR0cHM6Ly90c2Uz/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5s/UmIwN04zNGhjc05L/dWZ4VldrRm9BQUFB/QSZwaWQ9QXBp" width=20/> Chakra UI
 
 ## Landing Page
 Navbar and Menu are visible on the top of Landing Page from their a person can visit the pages visible in Navbar and Menubar.
@@ -18,12 +29,6 @@ Navbar and Menu are visible on the top of Landing Page from their a person can v
 #### Tablet view
 ![Home Page Tab](https://user-images.githubusercontent.com/96103433/161424767-32cb5ae5-2e86-4e56-921f-082d39ca0c44.png)
 
-
-<!-- <p align="center"> 
-  <a href="https://github.com/ryo-ma/github-profile-trophy">
-    <img src="https://github-profile-trophy.vercel.app/?username=OMKAR-WD&row=2&column=3&margin-w=15&margin-h=15&theme=nord"/>
-  </a>
-</p> -->
 
  #### Mobile view
 ![Home Page Mobile](https://user-images.githubusercontent.com/96103433/161424809-c45636b8-6c29-412b-867a-b7c831f76bf4.png)
