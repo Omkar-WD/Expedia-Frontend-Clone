@@ -20,7 +20,6 @@ import { BoxShadow } from "../Variables";
 export const Card = ({ data }) => {
   const [isFav, setIsFav] = useState(false);
   const toast = useToast();
-  console.log(data);
   const handleIconClick = () => {
     {
       isFav

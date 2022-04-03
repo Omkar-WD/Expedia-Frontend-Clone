@@ -9,6 +9,8 @@ import SignUp from "./SignUp/SignUp";
 import SignIn from "./SignIn/SignIn";
 import ProfileEdit from "./ProfileEdit/ProfileEdit";
 import Payment from "./Payment/Payment";
+import Trips from "./PastTrips/Trips";
+import Maintainance from "./Maintainance/Maintainance";
 
 function AllRoutes() {
   return (
@@ -22,6 +24,11 @@ function AllRoutes() {
       <Route path="/signin" element={<SignIn />}></Route>
       <Route path="/account" element={<ProfileEdit />}></Route>
       <Route path="/payment/:id" element={<Payment />}></Route>
+      <Route path="/trips/" element={<Trips />}></Route>
+      <Route path="/feedback/" element={<Maintainance />}></Route>
+      <Route path="/rewards/" element={<Maintainance />}></Route>
+      <Route path="/support" element={<Maintainance />}></Route>
+      <Route path="/language" element={<Maintainance />}></Route>
       <Route path="*" element={<NotFound />}></Route>
     </Routes>
   );

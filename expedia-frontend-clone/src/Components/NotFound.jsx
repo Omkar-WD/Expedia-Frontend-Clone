@@ -9,7 +9,6 @@ function NotFound() {
   }, []);
   return (
     <>
-      {" "}
       {isLoading ? (
         <Flex justify="center" mt={"5"}>
           <Spinner

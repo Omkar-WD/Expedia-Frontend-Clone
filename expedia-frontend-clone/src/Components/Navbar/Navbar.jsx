@@ -46,6 +46,7 @@ function Navbar() {
   const isLoginObj = useSelector((store) => store.isLogin.isLogin);
   const toast = useToast();
   const dispatch = useDispatch();
+
   const handleSignout = (e) => {
     localStorage.setItem("loginUser", {
       token: "",
@@ -67,6 +68,94 @@ function Navbar() {
       isClosable: true,
       position: "top",
     });
+  };
+
+  const handleTrip = () => {
+    if (isLoginObj.token !== "") Navigate("/trips");
+    else
+      toast({
+        title: "Please Sign in !!!",
+        status: "info",
+        duration: 2000,
+        isClosable: true,
+        position: "top",
+      });
+  };
+  const UserLoginSection = () => {
+    return (
+      <PopoverContent>
+        <PopoverArrow />
+        <PopoverCloseButton />
+        <PopoverBody>
+          <Text mt={5}>Members can access discounts and special features</Text>
+          <Button
+            mt={5}
+            w="100%"
+            colorScheme="blue"
+            onClick={() => Navigate("/signin")}
+          >
+            Sign in
+          </Button>
+          <Link to="/signup" mt={5}>
+            <Text _hover={{ color: hoverColor }}>Create a free account</Text>
+          </Link>
+          <Link mt={5} to="/favourite">
+            <Text _hover={{ color: hoverColor }}>Lists of favourites</Text>
+          </Link>
+          <Link to="/rewards" mt={5}>
+            <Text _hover={{ color: hoverColor }}>Expedia rewards</Text>
+          </Link>
+        </PopoverBody>
+        <PopoverFooter>
+          <Link to="/feedback" mt={5}>
+            <Text _hover={{ color: hoverColor }}>Feedback</Text>
+          </Link>
+        </PopoverFooter>
+      </PopoverContent>
+    );
+  };
+  const SignInSignOutSection = () => {
+    return (
+      <PopoverContent>
+        <PopoverArrow />
+        <PopoverCloseButton />
+        <PopoverHeader>
+          <Center mb="2">
+            <Heading size="md">Hi, Omkar</Heading>
+          </Center>
+          <Center mb="2">
+            <Heading as="h6" size="xs">
+              {isLoginObj.user.email}
+            </Heading>
+          </Center>
+          <Center mb="2">
+            <Tag variant="solid" colorScheme="blue">
+              Blue Member
+            </Tag>
+          </Center>
+        </PopoverHeader>
+        <PopoverBody>
+          <Link to="/account">Account</Link>
+          <br />
+          <Link to="/favourite">Lists of favourites</Link>
+          <br />
+          <Link to="/feedback">Feedback</Link>
+        </PopoverBody>
+        <PopoverFooter>
+          <Center>
+            <Button
+              w="100%"
+              colorScheme="blue"
+              onClick={(e) => {
+                handleSignout(e);
+              }}
+            >
+              Sign out
+            </Button>
+          </Center>
+        </PopoverFooter>
+      </PopoverContent>
+    );
   };
   return (
     <>
@@ -148,112 +237,37 @@ function Navbar() {
               {isLargerThan1280 ? (
                 <Stack direction="row" spacing={8} align="center" p="1">
                   <Text _hover={{ color: hoverColor }}>
-                    <Link to="/">
+                    <Link to="/language">
                       <Icon as={BiWorld} w={3.5} h={3.5} />
                       &nbsp; English
                     </Link>
                   </Text>
                   <Text _hover={{ color: hoverColor }}>
-                    <Link to="/">Support</Link>
+                    <Link to="/support">Support</Link>
                   </Text>
-                  <Text _hover={{ color: hoverColor }}>
-                    <Link to="/stays">Trips</Link>
+                  <Text
+                    cursor="pointer"
+                    _hover={{ color: hoverColor }}
+                    onClick={() => handleTrip()}
+                  >
+                    Trips
                   </Text>
-                  <Text cursor="pointer" _hover={{ color: hoverColor }}>
-                    <Popover>
-                      <PopoverTrigger>
-                        <Text>
-                          {isLoginObj.token !== ""
-                            ? isLoginObj.user.firstName
-                            : "Sign in"}
-                        </Text>
-                      </PopoverTrigger>
-                      <Portal>
-                        {isLoginObj.token !== "" ? (
-                          <PopoverContent>
-                            <PopoverArrow />
-                            <PopoverCloseButton />
-                            <PopoverHeader>
-                              <Center mb="2">
-                                <Heading size="md">Hi, Omkar</Heading>
-                              </Center>
-                              <Center mb="2">
-                                <Heading as="h6" size="xs">
-                                  {isLoginObj.user.email}
-                                </Heading>
-                              </Center>
-                              <Center mb="2">
-                                <Tag variant="solid" colorScheme="blue">
-                                  Blue Member
-                                </Tag>
-                              </Center>
-                            </PopoverHeader>
-                            <PopoverBody>
-                              <Link to="/account">Account</Link>
-                              <br />
-                              <Link to="/favourite">Lists of favourites</Link>
-                              <br />
-                              <Text>Feedback</Text>
-                            </PopoverBody>
-                            <PopoverFooter>
-                              <Center>
-                                <Button
-                                  w="100%"
-                                  colorScheme="blue"
-                                  onClick={(e) => {
-                                    handleSignout(e);
-                                  }}
-                                >
-                                  Sign out
-                                </Button>
-                              </Center>
-                            </PopoverFooter>
-                          </PopoverContent>
-                        ) : (
-                          <PopoverContent>
-                            <PopoverArrow />
-                            <PopoverCloseButton />
-                            <PopoverBody>
-                              <Text mt={5}>
-                                Members can access discounts and special
-                                features
-                              </Text>
-                              <Button
-                                mt={5}
-                                w="100%"
-                                colorScheme="blue"
-                                onClick={() => Navigate("/signin")}
-                              >
-                                Sign in
-                              </Button>
-                              <Link to="/signup" mt={5}>
-                                <Text _hover={{ color: hoverColor }}>
-                                  Create a free account
-                                </Text>
-                              </Link>
-                              <Link mt={5} to="/favourite">
-                                <Text _hover={{ color: hoverColor }}>
-                                  Lists of favourites
-                                </Text>
-                              </Link>
-                              <Link to="/reward" mt={5}>
-                                <Text _hover={{ color: hoverColor }}>
-                                  Expedia rewards
-                                </Text>
-                              </Link>
-                            </PopoverBody>
-                            <PopoverFooter>
-                              <Link to="/feedback" mt={5}>
-                                <Text _hover={{ color: hoverColor }}>
-                                  Feedback
-                                </Text>
-                              </Link>
-                            </PopoverFooter>
-                          </PopoverContent>
-                        )}
-                      </Portal>
-                    </Popover>
-                  </Text>
+                  <Popover>
+                    <PopoverTrigger>
+                      <Text cursor="pointer" _hover={{ color: hoverColor }}>
+                        {isLoginObj.token !== ""
+                          ? isLoginObj.user.firstName
+                          : "Sign in"}
+                      </Text>
+                    </PopoverTrigger>
+                    <Portal>
+                      {isLoginObj.token !== "" ? (
+                        <SignInSignOutSection />
+                      ) : (
+                        <UserLoginSection />
+                      )}
+                    </Portal>
+                  </Popover>
                 </Stack>
               ) : (
                 <Stack direction="row" spacing={8} align="center" p="1">
@@ -287,40 +301,22 @@ function Navbar() {
                     objectFit="cover"
                     src="https://w7.pngwing.com/pngs/751/12/png-transparent-computer-icons-business-briefcase-suitcase-rectangle-people-suitcase.png"
                     alt="Dan Abramov"
+                    onClick={() => handleTrip()}
                   />
                   <Popover>
                     <PopoverTrigger>
                       <Avatar
                         size="xs"
                         name="Dan Abrahmov"
-                        src="https://bit.ly/dan-abramov"
+                        src="https://flyclipart.com/thumb2/user-icon-png-pnglogocom-133466.png"
                       />
                     </PopoverTrigger>
                     <Portal>
-                      <PopoverContent>
-                        <PopoverArrow />
-                        <PopoverCloseButton />
-                        <PopoverBody>
-                          <Text>
-                            Members can access discounts and special features
-                          </Text>
-                          <br />
-                          <Button colorScheme="blue" w="100%">
-                            Sign in
-                          </Button>
-                          <br />
-                          <br />
-                          <Link to="">Create a free account</Link>
-                          <br />
-                          <br />
-                          <Text _hover={{ color: hoverColor }}>
-                            Lists of favourites
-                          </Text>
-                          <br />
-                          <Text>Expedia rewards</Text>
-                        </PopoverBody>
-                        <PopoverFooter>Feedback</PopoverFooter>
-                      </PopoverContent>
+                      {isLoginObj.token !== "" ? (
+                        <SignInSignOutSection />
+                      ) : (
+                        <UserLoginSection />
+                      )}
                     </Portal>
                   </Popover>
                 </Stack>

@@ -40,7 +40,6 @@ function SignIn() {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(userData);
     axios
       .post(`${API()}/auth/login`, {
         email: userData.email,
