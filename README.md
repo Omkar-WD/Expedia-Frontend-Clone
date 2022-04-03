@@ -2,7 +2,6 @@
 # EXPEDIA-CLONE-FRONTEND
 
 Expedia.co.in is an online travel agency owned by Expedia Group, an Indian online travel shopping company based in Place. The website and mobile app can be used to book airline tickets, hotel reservations, car rentals, cruise ships, and vacation packages.
-## Tech Stack
 
 ## 🛠 Tech Stacks
 Javascript, HTML, CSS, NodeJS, ExpressJS, ReactJS, redux, Chakra UI.
@@ -11,7 +10,8 @@ Javascript, HTML, CSS, NodeJS, ExpressJS, ReactJS, redux, Chakra UI.
 Navbar and Menu are visible on the top of Landing Page from their a person can visit the pages visible in Navbar and Menubar.
 
 #### Desktop view
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+<!-- ![App Screenshot](https://v![Home page Desktop](https://user-images.githubusercontent.com/96103433/161424705-fcdb07ac-c098-4975-88b9-2d58225b230b.png) -->
+ia.placeholder.com/468x300?text=App+Screenshot+Here)
 
 
 #### Tablet view
