@@ -42,19 +42,19 @@ function ListView() {
 
   const handlefilter = (e) => {
     const { value } = e.target;
-    if (value == "sort by rating") {
+    if (value === "sort by rating") {
       arr.sort((a, b) => {
         if (a.rating > b.rating) return -1;
         return 1;
       });
       setArr([...arr]);
-    } else if (value == "sort by price") {
+    } else if (value === "sort by price") {
       arr.sort((a, b) => {
         if (Number(a.offerPrice) - Number(b.offerPrice)) return 1;
         return -1;
       });
       setArr([...arr]);
-    } else if (value == "sort by review") {
+    } else if (value === "sort by review") {
       arr.sort((a, b) => {
         if (Number(a.reviewCount) - Number(b.reviewCount)) return -1;
         return 1;
@@ -235,7 +235,7 @@ function ListView() {
               </Box>
             ) : null}
             <Box w={isLargerThan768 ? "70%" : "90%"}>
-              <Flex justify="right" p={3}>
+              <Flex justify={isLargerThan768 ? "right" : "center"} p={3}>
                 <Select
                   placeholder="Select option"
                   id="filter"

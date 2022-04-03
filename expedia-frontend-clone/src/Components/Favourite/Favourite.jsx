@@ -3,25 +3,23 @@ import { Card } from "../HotelCard/Card";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import API from "../../API";
+import { useSelector } from "react-redux";
 
 function Favourite() {
   const [favouriteList, setFavouriteList] = useState([]);
-
+  const isLoginObj = useSelector((store) => store.isLogin.isLogin);
   useEffect(() => {
-    axios
-      .get(`https://pumpkin-cake-23112.herokuapp.com/favourite/userFavList`, {
-        userId: "624690ee54e299590298b4d5",
-      })
-      .then((res) => {
-        console.log("Data", res);
-        // setFavouriteList(res.data);
-      });
+    let url = `${API()}/favourite/userFavList/${isLoginObj.user._id}`;
+    axios.get(url).then((res) => {
+      console.log(isLoginObj.user._id, url, res.data);
+      // setFavouriteList(res.data.hotelId);
+    });
   }, []);
 
   return (
     <Flex justify="center" gap={5} flexWrap="wrap">
       {favouriteList.length > 0
-        ? favouriteList.map((e) => <Card key={e.id} data={e} />)
+        ? favouriteList.map((e) => <Card key={e._id} data={e} />)
         : null}
     </Flex>
   );

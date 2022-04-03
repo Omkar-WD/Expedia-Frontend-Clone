@@ -32,16 +32,23 @@ import API from "../../API";
 
 function Payment() {
   const [isLoading, setIsLoading] = useState(true);
-  const [hotelData, setHotelData] = useState({});
+  const [hotelData, setHotelData] = useState([]);
   const { id } = useParams();
   const isLoginObj = useSelector((store) => store.isLogin.isLogin);
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
     }, 500);
-    axios.get(`${API()}/hotel/${id}`).then((res) => {
-      let x = res.data;
-      setHotelData(x);
+  }, []);
+
+  useEffect(() => {
+    axios.get(`${API()}/hotel`).then((res) => {
+      for (let i = 0; i < res.data.length; i++) {
+        if (res.data[i]._id === id) {
+          setHotelData([res.data[i]]);
+          break;
+        }
+      }
     });
   }, []);
   const [isLargerThan769] = useMediaQuery("(min-width: 769px)");
@@ -214,6 +221,7 @@ function Payment() {
                                 borderRadius="lg"
                                 p={"3"}
                                 cursor="pointer"
+                                isDisabled="true"
                               >
                                 <FormLabel htmlFor="firstName">
                                   Traveller Name
@@ -314,7 +322,7 @@ function Payment() {
                     align="center"
                     justify="center"
                   >
-                    <Card data={hotelData} />
+                    {hotelData.length > 0 ? <Card data={hotelData[0]} /> : null}
 
                     <Box
                       bgColor="white"
