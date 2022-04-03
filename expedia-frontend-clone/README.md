@@ -1,7 +1,7 @@
 
 # EXPEDIA-CLONE-FRONTEND
 
-Expedia.co.in is an online travel agency owned by Expedia Group, an Indian online travel shopping company based in Place. The website and mobile app can be used to book airline tickets, hotel reservations, car rentals, cruise ships, and vacation packages.
+Expedia.co.in is an online travel agency owned by Expedia Group, The website is used to book airline tickets, hotel reservations, car rentals, cruise ships, and vacation packages. This website is operated by BEX Travel Asia Pvt. Ltd., Singapore.
 
 ## 🛠 Tech Stack
 <img src="https://cdn-icons-png.flaticon.com/512/1199/1199124.png" width=20/> JavaScript
