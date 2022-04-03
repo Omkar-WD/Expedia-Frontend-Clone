@@ -156,9 +156,9 @@ If wrong route called then 404 not found page will display.
 Our Website is fully responsive in all mobile, tablet and Desktop views.
 ## Authors
 
-- [@Omkar Pasalkar](https://github.com/Omkar-WD)
-- [@Prathamesh Mungekar](https://github.com/prathamsm7)
-- [@Shashikant Patil](https://github.com/shashi530)
+1. [@Omkar Pasalkar](https://github.com/Omkar-WD)
+2. [@Prathamesh Mungekar](https://github.com/prathamsm7)
+3. [@Shashikant Patil](https://github.com/shashi530)
 
 ## Blog
 www.blogspot.com
@@ -192,3 +192,8 @@ Start the server
   npm run start
 ```
 
+## Expedia Backend-Clone
+
+```bash
+  git clone https://github.com/shashi530/Expedia-Backend-Clone.git
+```
