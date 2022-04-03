@@ -19,7 +19,7 @@ function AllRoutes() {
       <Route path="/stays" element={<ListView />}></Route>
       <Route path="/stays/:cityName" element={<ListView />}></Route>
       <Route path="/detail-page/:id" element={<DetailView />}></Route>
-      <Route path="/favourite" element={<Favourite />}></Route>
+      <Route path="/favourite" element={<Maintainance />}></Route>
       <Route path="/signup" element={<SignUp />}></Route>
       <Route path="/signin" element={<SignIn />}></Route>
       <Route path="/account" element={<ProfileEdit />}></Route>

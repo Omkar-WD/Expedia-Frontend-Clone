@@ -121,7 +121,7 @@ function Navbar() {
         <PopoverCloseButton />
         <PopoverHeader>
           <Center mb="2">
-            <Heading size="md">Hi, Omkar</Heading>
+            <Heading size="md">Hi, {isLoginObj.user.firstName}</Heading>
           </Center>
           <Center mb="2">
             <Heading as="h6" size="xs">
