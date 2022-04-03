@@ -10,8 +10,7 @@ Javascript, HTML, CSS, NodeJS, ExpressJS, ReactJS, redux, Chakra UI.
 Navbar and Menu are visible on the top of Landing Page from their a person can visit the pages visible in Navbar and Menubar.
 
 #### Desktop view
-<!-- ![App Screenshot](https://v![Home page Desktop](https://user-images.githubusercontent.com/96103433/161424705-fcdb07ac-c098-4975-88b9-2d58225b230b.png) -->
-ia.placeholder.com/468x300?text=App+Screenshot+Here)
+![Home page Desktop](https://user-images.githubusercontent.com/96103433/161424736-3c96d20a-43c6-4270-8cdf-08d9af52a275.png)
 
 
 #### Tablet view
