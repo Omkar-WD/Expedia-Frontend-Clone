@@ -9,14 +9,14 @@ Expedia.co.in is an online travel agency owned by Expedia Group, an Indian onlin
 ## Landing Page
 Navbar and Menu are visible on the top of Landing Page from their a person can visit the pages visible in Navbar and Menubar.
 
-Desktop view
+#### Desktop view
 ![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
 
 
-Tablet view
+#### Tablet view
 ![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
 
-Mobile view
+ #### Mobile view
 ![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
 
 
@@ -69,10 +69,10 @@ A Person can create a new account or he can signin into exciting account also he
 
 ![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
 
-SignUp
+#### SignUp
 ![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
 
-SignIn
+#### SignIn
 ![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
 
 
