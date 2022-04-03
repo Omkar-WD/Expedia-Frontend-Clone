@@ -32,11 +32,14 @@ Navbar and Menu are visible on the top of Landing Page from their a person can v
 
 
  #### Mobile view
- <p align="center"> 
-    ![Home Page Mobile](https://user-images.githubusercontent.com/96103433/161424809-c45636b8-6c29-412b-867a-b7c831f76bf4.png)
+
+<p align="center"> 
+  <a href="/">
+    <img src="https://user-images.githubusercontent.com/96103433/161424809-c45636b8-6c29-412b-867a-b7c831f76bf4.png"/>
+  </a>
 </p>
- 
-![Home Page Mobile](https://user-images.githubusercontent.com/96103433/161424809-c45636b8-6c29-412b-867a-b7c831f76bf4.png)
+
+<!-- ![Home Page Mobile](https://user-images.githubusercontent.com/96103433/161424809-c45636b8-6c29-412b-867a-b7c831f76bf4.png) -->
 
 
 
