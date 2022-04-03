@@ -17,11 +17,11 @@ Navbar and Menu are visible on the top of Landing Page from their a person can v
 ![Home Page Tab](https://user-images.githubusercontent.com/96103433/161424767-32cb5ae5-2e86-4e56-921f-082d39ca0c44.png)
 
 
-<p align="center"> 
+<!-- <p align="center"> 
   <a href="https://github.com/ryo-ma/github-profile-trophy">
     <img src="https://github-profile-trophy.vercel.app/?username=OMKAR-WD&row=2&column=3&margin-w=15&margin-h=15&theme=nord"/>
   </a>
-</p>
+</p> -->
 
  #### Mobile view
 ![Home Page Mobile](https://user-images.githubusercontent.com/96103433/161424809-c45636b8-6c29-412b-867a-b7c831f76bf4.png)
