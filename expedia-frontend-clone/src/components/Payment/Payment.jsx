@@ -15,25 +15,45 @@ import {
   InputGroup,
   InputLeftAddon,
   Spinner,
-} from "@chakra-ui/react";
-import React from "react";
-import axios from "axios";
-import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+} from '@chakra-ui/react';
+import React from 'react';
+import axios from 'axios';
+import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
-import { MdPayment, MdPerson } from "react-icons/md";
-import { FaLock } from "react-icons/fa";
-import { ImCheckmark } from "react-icons/im";
-import { TiArrowRightThick } from "react-icons/ti";
-import { Card } from "../HotelCard/Card";
-import { BoxShadow } from "../Variables";
-import { useParams, Link } from "react-router-dom";
-import API from "../../API";
+import { MdPayment, MdPerson } from 'react-icons/md';
+import { FaLock } from 'react-icons/fa';
+import { ImCheckmark } from 'react-icons/im';
+import { TiArrowRightThick } from 'react-icons/ti';
+import { Card } from '../HotelCard/Card';
+import { BoxShadow } from '../Variables';
+import { useParams, Link } from 'react-router-dom';
+import API from '../../API';
+
+function loadScript(src) {
+  return new Promise((resolve) => {
+    const script = document.createElement('script');
+    script.src = src;
+    script.onload = () => {
+      resolve(true);
+    };
+    script.onerror = () => {
+      resolve(false);
+    };
+    document.body.appendChild(script);
+  });
+}
+
+const __DEV__ = document.domain === 'localhost';
 
 function Payment() {
   const [isLoading, setIsLoading] = useState(true);
-  const [hotelData, setHotelData] = useState([]);
+  const [hotelData, setHotelData] = useState({});
+  const stayData = JSON.parse(localStorage.getItem('staySearch'));
+  const userData = JSON.parse(localStorage.getItem('loginUser'));
+
   const { id } = useParams();
+
   const isLoginObj = useSelector((store) => store.isLogin.isLogin);
   useEffect(() => {
     setTimeout(() => {
@@ -50,22 +70,107 @@ function Payment() {
         }
       }
     });
-  }, []);
-  const [isLargerThan769] = useMediaQuery("(min-width: 769px)");
+  }, [id]);
+  const [isLargerThan769] = useMediaQuery('(min-width: 769px)');
+
+  let travellers = stayData.adult + stayData.children;
+  let reqRooms;
+  if (travellers % 2 == 0) {
+    reqRooms = Math.floor(travellers / 2);
+  } else {
+    reqRooms = Math.ceil(travellers / 2);
+  }
+
+  let hp = +hotelData[0]?.offerPrice;
+  const d1 = stayData.checkin.split('-')[2];
+  const d2 = stayData.checkout.split('-')[2];
+  const totalNights = d2 - d1;
+
+  console.log(d1, d2, totalNights, hp);
+
+  let totalFare = totalNights * reqRooms * hp;
+
+  // ? Payment Section
+  async function displayRazorpay() {
+    const res = await loadScript(
+      'https://checkout.razorpay.com/v1/checkout.js'
+    );
+
+    if (!res) {
+      alert('Razorpay SDK failed to load. Are you online?');
+      return;
+    }
+
+    const payData = {
+      payment_capture: 1,
+      amount: totalFare + 1800,
+      currency: 'INR',
+    };
+
+    const data = await fetch('http://localhost:8080/payment/pay', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: JSON.stringify(payData),
+    }).then((t) => t.json());
+
+    const options = {
+      key: __DEV__ ? 'rzp_test_LrUd2sYQ0QeGXG' : 'PRODUCTION_KEY',
+      currency: data.currency,
+      amount: data.amount * 100,
+      order_id: data.id,
+      name: 'Expedia',
+      description: 'Thank you for nothing. Please give us some money',
+      image:
+        'https://www.expedia.co.in/_dms/header/logo.svg?locale=en_GB&siteid=27&2',
+      handler: async function (response) {
+        const Orderdata = {
+          orderCreationId: data.id,
+          razorpayPaymentId: response.razorpay_payment_id,
+          razorpayOrderId: response.razorpay_order_id,
+          razorpaySignature: response.razorpay_signature,
+        };
+
+        const result = await axios.post(
+          'http://localhost:8080/payment/success',
+          {
+            Orderdata,
+            hotelData,
+            userData,
+            stayData,
+            amount: data.amount,
+          }
+        );
+
+        console.log(result);
+        // alert(result.data.msg);
+      },
+      prefill: {
+        name: userData.user.firstName,
+        email: 'sdfdsjfh2@ndsfdf.com',
+        phone_number: '9899999999',
+      },
+    };
+    const paymentObject = new window.Razorpay(options);
+    paymentObject.open();
+  }
+
   const TextWithIcon = ({ logo, heading, para }) => {
     return (
       <Flex
         gap={1}
-        p="10px"
-        direction="row"
-        flexWrap="wrap"
-        justify={isLargerThan769 ? "left" : "center"}
+        p='10px'
+        direction='row'
+        flexWrap='wrap'
+        justify={isLargerThan769 ? 'left' : 'center'}
       >
-        <Box m="10px" w="20px">
-          <Icon as={logo} h="100%" w="100%" />
+        <Box m='10px' w='20px'>
+          <Icon as={logo} h='100%' w='100%' />
         </Box>
-        <Flex direction="column" gap="10px">
-          <Heading as="h5" size="sm">
+        <Flex direction='column' gap='10px'>
+          <Heading as='h5' size='sm'>
             {heading}
           </Heading>
           <Text>{para}</Text>
@@ -76,191 +181,191 @@ function Payment() {
 
   return (
     <>
-      {" "}
+      {' '}
       {isLoading ? (
-        <Flex justify="center" mt={"5"}>
+        <Flex justify='center' mt={'5'}>
           <Spinner
-            thickness="5px"
-            speed="0.65s"
-            emptyColor="gray.200"
-            color="#3182ce"
-            size="lg"
+            thickness='5px'
+            speed='0.65s'
+            emptyColor='gray.200'
+            color='#3182ce'
+            size='lg'
           />
         </Flex>
       ) : (
-        <Box bgColor="#f7f9fb" w="100%">
-          <Container maxW="container.xl">
-            <Heading as="h3" size="lg" p={5}>
+        <Box bgColor='#f7f9fb' w='100%'>
+          <Container maxW='container.xl'>
+            <Heading as='h3' size='lg' p={5}>
               Review and book
             </Heading>
-            <Container maxW="container.xl">
-              <Flex gap={10} direction={"column"}>
+            <Container maxW='container.xl'>
+              <Flex gap={10} direction={'column'}>
                 <Box
-                  mt="10px"
-                  maxW="container.xl"
-                  bgColor="white"
-                  borderRadius="10px"
+                  mt='10px'
+                  maxW='container.xl'
+                  bgColor='white'
+                  borderRadius='10px'
                   boxShadow={BoxShadow}
                 >
                   <TextWithIcon
                     logo={MdPayment}
                     heading={
-                      "Free cancellation before Thu, 14 Apr, 19:00 (property local time)"
+                      'Free cancellation before Thu, 14 Apr, 19:00 (property local time)'
                     }
                     para={
-                      "You can change or cancel this stay for a full refund if plans change. Because flexibility matters."
+                      'You can change or cancel this stay for a full refund if plans change. Because flexibility matters.'
                     }
                   />
                 </Box>
 
                 <Flex
-                  gap="5"
-                  direction={{ base: "column", md: "row" }}
-                  justify="center"
-                  align="center"
+                  gap='5'
+                  direction={{ base: 'column', md: 'row' }}
+                  justify='center'
+                  align='center'
                 >
-                  <Box w={isLargerThan769 ? "60%" : "80%"}>
-                    <Flex gap="10" direction="column">
+                  <Box w={isLargerThan769 ? '60%' : '80%'}>
+                    <Flex gap='10' direction='column'>
                       <Box
-                        h="100%"
-                        w="100%"
-                        bgColor="white"
-                        borderRadius="10px"
+                        h='100%'
+                        w='100%'
+                        bgColor='white'
+                        borderRadius='10px'
                         boxShadow={BoxShadow}
                       >
                         <TextWithIcon
                           logo={FaLock}
-                          heading={"Signed in as"}
+                          heading={'Signed in as'}
                           para={isLoginObj.user.email}
                         />
                       </Box>
 
                       <Box
-                        bgColor="white"
-                        borderRadius="10px"
-                        p="5"
+                        bgColor='white'
+                        borderRadius='10px'
+                        p='5'
                         boxShadow={BoxShadow}
                       >
-                        <Flex gap="2" justify="center" align="center">
+                        <Flex gap='2' justify='center' align='center'>
                           <Box>
                             <Flex
-                              direction="column"
-                              gap="2"
-                              justify="center"
-                              align="center"
+                              direction='column'
+                              gap='2'
+                              justify='center'
+                              align='center'
                             >
                               <Flex
-                                direction={{ base: "column", md: "row" }}
+                                direction={{ base: 'column', md: 'row' }}
                                 p={3}
                                 gap={3}
-                                justify="center"
-                                align="center"
+                                justify='center'
+                                align='center'
                               >
                                 <Flex
-                                  verticalAlign={"middle"}
+                                  verticalAlign={'middle'}
                                   gap={1}
-                                  justify="center"
-                                  align="center"
+                                  justify='center'
+                                  align='center'
                                 >
                                   <Box>
                                     <Icon
-                                      color="green"
+                                      color='green'
                                       as={ImCheckmark}
-                                      w="4"
-                                      h="4"
+                                      w='4'
+                                      h='4'
                                     />
                                   </Box>
-                                  <Box verticalAlign={"middle"}>
-                                    <Text color="green" fontSize="md">
+                                  <Box verticalAlign={'middle'}>
+                                    <Text color='green' fontSize='md'>
                                       Breakfast included
                                     </Text>
                                   </Box>
                                 </Flex>
                                 <Flex
-                                  verticalAlign={"middle"}
+                                  verticalAlign={'middle'}
                                   gap={1}
-                                  justify="center"
-                                  align="center"
+                                  justify='center'
+                                  align='center'
                                 >
                                   <Box>
                                     <Icon
-                                      color="green"
+                                      color='green'
                                       as={ImCheckmark}
-                                      w="4"
-                                      h="4"
+                                      w='4'
+                                      h='4'
                                     />
                                   </Box>
-                                  <Box verticalAlign={"middle"}>
-                                    <Text color="green" fontSize="md">
+                                  <Box verticalAlign={'middle'}>
+                                    <Text color='green' fontSize='md'>
                                       Free Parking
                                     </Text>
                                   </Box>
                                 </Flex>
                                 <Flex
-                                  verticalAlign={"middle"}
+                                  verticalAlign={'middle'}
                                   gap={1}
-                                  justify="center"
-                                  align="center"
+                                  justify='center'
+                                  align='center'
                                 >
                                   <Box>
                                     <Icon
-                                      color="green"
+                                      color='green'
                                       as={ImCheckmark}
-                                      w="4"
-                                      h="4"
+                                      w='4'
+                                      h='4'
                                     />
                                   </Box>
-                                  <Box verticalAlign={"middle"}>
-                                    <Text color="green" fontSize="md">
+                                  <Box verticalAlign={'middle'}>
+                                    <Text color='green' fontSize='md'>
                                       Free WiFi
                                     </Text>
                                   </Box>
                                 </Flex>
                               </Flex>
                               <FormControl
-                                borderRadius="lg"
-                                p={"3"}
-                                cursor="pointer"
-                                isDisabled="true"
+                                borderRadius='lg'
+                                p={'3'}
+                                cursor='pointer'
+                                isDisabled='true'
                               >
-                                <FormLabel htmlFor="firstName">
+                                <FormLabel htmlFor='firstName'>
                                   Traveller Name
                                 </FormLabel>
                                 <Input
-                                  type="text"
+                                  type='text'
                                   value={
                                     isLoginObj.user.firstName +
-                                    " " +
+                                    ' ' +
                                     isLoginObj.user.lastName
                                   }
                                 />
                                 <Flex
-                                  direction={{ base: "column", md: "row" }}
-                                  gap="20px"
+                                  direction={{ base: 'column', md: 'row' }}
+                                  gap='20px'
                                 >
-                                  <Flex direction="column">
-                                    <FormLabel htmlFor="firstName">
+                                  <Flex direction='column'>
+                                    <FormLabel htmlFor='firstName'>
                                       First Name
                                     </FormLabel>
                                     <Input
-                                      type="text"
+                                      type='text'
                                       value={isLoginObj.user.firstName}
                                     />
                                   </Flex>
-                                  <Flex direction="column">
-                                    <FormLabel htmlFor="firstName">
+                                  <Flex direction='column'>
+                                    <FormLabel htmlFor='firstName'>
                                       Last Name
                                     </FormLabel>
                                     <Input
-                                      type="text"
+                                      type='text'
                                       value={isLoginObj.user.lastName}
                                     />
                                   </Flex>
                                 </Flex>
                               </FormControl>
                               <InputGroup p={3}>
-                                <InputLeftAddon children="+91" />
-                                <Input type="tel" placeholder="phone number" />
+                                <InputLeftAddon children='+91' />
+                                <Input type='tel' placeholder='phone number' />
                               </InputGroup>
                             </Flex>
                           </Box>
@@ -268,16 +373,16 @@ function Payment() {
                       </Box>
 
                       <Box
-                        h="100%"
-                        w="100"
-                        bgColor="white"
-                        borderRadius="10px"
-                        p="10px"
-                        textAlign="justify"
+                        h='100%'
+                        w='100'
+                        bgColor='white'
+                        borderRadius='10px'
+                        p='10px'
+                        textAlign='justify'
                         boxShadow={BoxShadow}
                       >
-                        <Flex direction="column" gap="5">
-                          <Heading as="h4" size="md">
+                        <Flex direction='column' gap='5'>
+                          <Heading as='h4' size='md'>
                             Important information about your booking
                           </Heading>
 
@@ -317,50 +422,53 @@ function Payment() {
                     </Flex>
                   </Box>
                   <Flex
-                    direction="column"
-                    w={isLargerThan769 ? "40%" : "80%"}
-                    align="center"
-                    justify="center"
+                    direction='column'
+                    w={isLargerThan769 ? '40%' : '80%'}
+                    align='center'
+                    justify='center'
                   >
                     {hotelData.length > 0 ? <Card data={hotelData[0]} /> : null}
 
                     <Box
-                      bgColor="white"
-                      borderRadius="10px"
-                      mt="10px"
+                      bgColor='white'
+                      borderRadius='10px'
+                      mt='10px'
                       boxShadow={BoxShadow}
                     >
-                      <Flex direction="column">
-                        <Heading as="h3" size="lg" p={3}>
+                      <Flex direction='column'>
+                        <Heading as='h3' size='lg' p={3}>
                           Price details
                         </Heading>
-                        <Box border="1px"></Box>
-                        <Box p="10px" mb="10px">
-                          <Flex justify="space-between" gap={5}>
-                            <Text fontSize="16px">1 room x 1 night</Text>
-                            <Text fontSize="16px">Rs 10,000.00</Text>
+                        <Box border='1px'></Box>
+                        <Box p='10px' mb='10px'>
+                          <Flex justify='space-between' gap={5}>
+                            <Text fontSize='16px'>
+                              {reqRooms} room x {totalNights} night
+                            </Text>
+                            <Text fontSize='16px'>Rs {totalFare}</Text>
                           </Flex>
-                          <Flex justify="space-between" mb="10px">
-                            <Text fontSize="16px">Taxes and service fees </Text>
-                            <Text fontSize="16px">Rs 1,800.00</Text>
+                          <Flex justify='space-between' mb='10px'>
+                            <Text fontSize='16px'>Taxes and service fees </Text>
+                            <Text fontSize='16px'>Rs 1,800.00</Text>
                           </Flex>
-                          <Box border="1px solid black"></Box>
-                          <Flex justify="space-between" mt="10px">
-                            <Text fontSize="16px">Total</Text>
-                            <Text fontSize="16px">Rs 11,800.00</Text>
+                          <Box border='1px solid black'></Box>
+                          <Flex justify='space-between' mt='10px'>
+                            <Text fontSize='16px'>Total</Text>
+                            <Text fontSize='16px'>Rs {totalFare + 1800}</Text>
                           </Flex>
-                          <Text mt="20px" textAlign="justify">
+                          <Text mt='20px' textAlign='justify'>
                             Trip total includes GST that Expedia pays to its
                             vendors (e.g. Hotels). We retain our service fee for
                             facilitating your travel reservation. For details
                             please see our terms of use.
                           </Text>
                           <Button
-                            mt="20px"
+                            mt='20px'
                             rightIcon={<TiArrowRightThick />}
-                            colorScheme="teal"
-                            variant="solid"
-                            maxW="250px"
+                            colorScheme='teal'
+                            variant='solid'
+                            maxW='250px'
+                            onClick={displayRazorpay}
                           >
                             Complete Booking
                           </Button>

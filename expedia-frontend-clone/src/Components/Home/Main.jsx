@@ -26,15 +26,15 @@ import {
   HStack,
   Spinner,
   Heading,
-} from "@chakra-ui/react";
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { BoxShadow, hoverColor } from "../Variables";
+} from '@chakra-ui/react';
+import { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { BoxShadow, hoverColor } from '../Variables';
 
 function Main() {
   const [isLoading, setIsLoading] = useState(true);
-  const [isLargerThan768] = useMediaQuery("(min-width: 768px)");
-  const [isLargerThan492] = useMediaQuery("(min-width: 492px)");
+  const [isLargerThan768] = useMediaQuery('(min-width: 768px)');
+  const [isLargerThan492] = useMediaQuery('(min-width: 492px)');
 
   const counter = useCounter({
     max: 10,
@@ -44,9 +44,9 @@ function Main() {
 
   const Stays = () => {
     const [stayData, setStayData] = useState({
-      city: "",
-      checkin: "",
-      checkout: "",
+      city: '',
+      checkin: '',
+      checkout: '',
       room: 1,
       adult: 1,
       children: 1,
@@ -70,8 +70,8 @@ function Main() {
     const onDecrementCounter = (e) => {
       let { id, value } = e.target;
       if (
-        (id == "room" && stayData.room <= 1) ||
-        (id == "adult" && stayData.adult <= 1)
+        (id == 'room' && stayData.room <= 1) ||
+        (id == 'adult' && stayData.adult <= 1)
       ) {
         return false;
       }
@@ -79,63 +79,65 @@ function Main() {
         return false;
       }
       value = parseInt(value);
-      console.log(value, typeof value);
       setStayData({ ...stayData, [id]: value - 1 });
     };
 
+    let navigate = useNavigate();
     const redirect = (e) => {
+      localStorage.setItem('staySearch', JSON.stringify(stayData));
       console.log(`redirecting to /stays/${stayData.city}`);
+      navigate(`/stays/${stayData.city}`);
     };
 
     return (
       <>
         <Flex
-          flexWrap="wrap"
-          justify="space-between"
-          gap="2"
-          w={isLargerThan768 ? "50%" : "90%"}
+          flexWrap='wrap'
+          justify='space-between'
+          gap='2'
+          w={isLargerThan768 ? '50%' : '90%'}
         >
           <InputGroup>
-            <InputLeftAddon children={isLargerThan492 ? "Going to" : "GT"} />
+            <InputLeftAddon children={isLargerThan492 ? 'Going to' : 'GT'} />
             <Input
               value={stayData.city}
-              type="text"
-              id="city"
+              type='text'
+              id='city'
               onChange={(e) => {
                 onChangeInput(e);
               }}
-              placeholder="Enter a location"
+              placeholder='Enter a location'
             />
           </InputGroup>
           <InputGroup>
-            <InputLeftAddon children={isLargerThan492 ? "Check-in" : "CI"} />
+            <InputLeftAddon children={isLargerThan492 ? 'Check-in' : 'CI'} />
             <Input
               value={stayData.checkin}
-              id="checkin"
+              id='checkin'
               onChange={(e) => {
                 onChangeInput(e);
               }}
-              type="date"
-              placeholder="Basic usage"
+              type='date'
+              placeholder='Basic usage'
             />
           </InputGroup>
           <InputGroup>
-            <InputLeftAddon children={isLargerThan492 ? "Check-out" : "CO"} />
+            <InputLeftAddon children={isLargerThan492 ? 'Check-out' : 'CO'} />
             <Input
               value={stayData.checkout}
-              id="checkout"
+              id='checkout'
               onChange={(e) => {
                 onChangeInput(e);
               }}
-              type="date"
-              placeholder="Basic usage"
+              type='date'
+              placeholder='Basic usage'
             />
           </InputGroup>
           <InputGroup>
             <Popover>
               <PopoverTrigger>
                 <Button>
-                  Travellers :-{" "}
+                  Travellers :-{' '}
                   {isLargerThan492
                     ? ` ${stayData.room} room , ${
                         stayData.adult + stayData.children
@@ -175,11 +177,11 @@ function Main() {
                         </Button>
                       </HStack>
                     </Flex> */}
-                    <Flex align="center" gap="4" justify="space-between">
+                    <Flex align='center' gap='4' justify='space-between'>
                       <Text>Adults </Text>
-                      <HStack w="150px" m={2}>
+                      <HStack w='150px' m={2}>
                         <Button
-                          id="adult"
+                          id='adult'
                           value={stayData.adult}
                           onClick={(e) => {
                             onIncrementCounter(e);
@@ -189,7 +191,7 @@ function Main() {
                         </Button>
                         <Input m={2} value={stayData.adult} readOnly={true} />
                         <Button
-                          id="adult"
+                          id='adult'
                           value={stayData.adult}
                           onClick={(e) => {
                             onDecrementCounter(e);
@@ -199,11 +201,11 @@ function Main() {
                         </Button>
                       </HStack>
                     </Flex>
-                    <Flex align="center" gap="4" justify="space-between">
+                    <Flex align='center' gap='4' justify='space-between'>
                       <Text>Children</Text>
-                      <HStack w="150px" m={2}>
+                      <HStack w='150px' m={2}>
                         <Button
-                          id="children"
+                          id='children'
                           value={stayData.children}
                           onClick={(e) => {
                             onIncrementCounter(e);
@@ -217,7 +219,7 @@ function Main() {
                           readOnly={true}
                         />
                         <Button
-                          id="children"
+                          id='children'
                           value={stayData.children}
                           onClick={(e) => {
                             onDecrementCounter(e);
@@ -234,10 +236,10 @@ function Main() {
           </InputGroup>
         </Flex>
         <Button
-          colorScheme="blue"
+          colorScheme='blue'
           onClick={(e) => {
             console.log(stayData);
-            // redirect(e);
+            redirect(e);
           }}
         >
           Search
@@ -250,31 +252,31 @@ function Main() {
     return (
       <>
         <Flex
-          flexWrap="wrap"
-          justify="space-between"
-          gap="2"
-          w={isLargerThan768 ? "50%" : "90%"}
+          flexWrap='wrap'
+          justify='space-between'
+          gap='2'
+          w={isLargerThan768 ? '50%' : '90%'}
         >
           <InputGroup>
             <InputLeftAddon
-              children={isLargerThan492 ? "Leaving from" : "LF"}
+              children={isLargerThan492 ? 'Leaving from' : 'LF'}
             />
-            <Input placeholder="Enter a location" />
+            <Input placeholder='Enter a location' />
           </InputGroup>
           <InputGroup>
-            <InputLeftAddon children={isLargerThan492 ? "Going to" : "GT"} />
-            <Input placeholder="Enter a location" />
+            <InputLeftAddon children={isLargerThan492 ? 'Going to' : 'GT'} />
+            <Input placeholder='Enter a location' />
           </InputGroup>
           <InputGroup>
-            <InputLeftAddon children={isLargerThan492 ? "Check-in" : "CI"} />
-            <Input type="date" placeholder="Basic usage" />
+            <InputLeftAddon children={isLargerThan492 ? 'Check-in' : 'CI'} />
+            <Input type='date' placeholder='Basic usage' />
           </InputGroup>
           <InputGroup>
-            <InputLeftAddon children={isLargerThan492 ? "Check-out" : "CO"} />
-            <Input type="date" placeholder="Basic usage" />
+            <InputLeftAddon children={isLargerThan492 ? 'Check-out' : 'CO'} />
+            <Input type='date' placeholder='Basic usage' />
           </InputGroup>
         </Flex>
-        <Button colorScheme="blue">Search</Button>
+        <Button colorScheme='blue'>Search</Button>
       </>
     );
   };
@@ -283,29 +285,29 @@ function Main() {
     return (
       <>
         <Flex
-          flexWrap="wrap"
-          justify="space-between"
-          gap="2"
-          w={isLargerThan768 ? "50%" : "90%"}
+          flexWrap='wrap'
+          justify='space-between'
+          gap='2'
+          w={isLargerThan768 ? '50%' : '90%'}
         >
           <InputGroup>
-            <InputLeftAddon children={isLargerThan492 ? "Pick-up" : "PL"} />
-            <Input placeholder="Enter a location" />
+            <InputLeftAddon children={isLargerThan492 ? 'Pick-up' : 'PL'} />
+            <Input placeholder='Enter a location' />
           </InputGroup>
           <InputGroup>
             <InputLeftAddon
-              children={isLargerThan492 ? "Pick-up date" : "PD"}
+              children={isLargerThan492 ? 'Pick-up date' : 'PD'}
             />
-            <Input type="date" />
+            <Input type='date' />
           </InputGroup>
           <InputGroup>
             <InputLeftAddon
-              children={isLargerThan492 ? "Drop-off date" : "DD"}
+              children={isLargerThan492 ? 'Drop-off date' : 'DD'}
             />
-            <Input type="date" placeholder="Basic usage" />
+            <Input type='date' placeholder='Basic usage' />
           </InputGroup>
         </Flex>
-        <Button colorScheme="blue">Search</Button>
+        <Button colorScheme='blue'>Search</Button>
       </>
     );
   };
@@ -314,31 +316,31 @@ function Main() {
     return (
       <>
         <Flex
-          flexWrap="wrap"
-          justify="space-between"
-          gap="2"
-          w={isLargerThan768 ? "50%" : "90%"}
+          flexWrap='wrap'
+          justify='space-between'
+          gap='2'
+          w={isLargerThan768 ? '50%' : '90%'}
         >
           <InputGroup>
             <InputLeftAddon
-              children={isLargerThan492 ? "Leaving from" : "LF"}
+              children={isLargerThan492 ? 'Leaving from' : 'LF'}
             />
-            <Input placeholder="Enter a location" />
+            <Input placeholder='Enter a location' />
           </InputGroup>
           <InputGroup>
-            <InputLeftAddon children={isLargerThan492 ? "Going to" : "GT"} />
-            <Input placeholder="Enter a location" />
+            <InputLeftAddon children={isLargerThan492 ? 'Going to' : 'GT'} />
+            <Input placeholder='Enter a location' />
           </InputGroup>
           <InputGroup>
-            <InputLeftAddon children={isLargerThan492 ? "Check-in" : "CI"} />
-            <Input type="date" placeholder="Basic usage" />
+            <InputLeftAddon children={isLargerThan492 ? 'Check-in' : 'CI'} />
+            <Input type='date' placeholder='Basic usage' />
           </InputGroup>
           <InputGroup>
-            <InputLeftAddon children={isLargerThan492 ? "Check-out" : "CO"} />
-            <Input type="date" placeholder="Basic usage" />
+            <InputLeftAddon children={isLargerThan492 ? 'Check-out' : 'CO'} />
+            <Input type='date' placeholder='Basic usage' />
           </InputGroup>
         </Flex>
-        <Button colorScheme="blue">Search</Button>
+        <Button colorScheme='blue'>Search</Button>
       </>
     );
   };
@@ -346,11 +348,11 @@ function Main() {
     return (
       <Tab
         _selected={{
-          boxShadow: "none",
-          borderBottom: "2px solid blue",
+          boxShadow: 'none',
+          borderBottom: '2px solid blue',
           color: hoverColor,
         }}
-        _hover={{ borderBottom: "1px solid blue", color: hoverColor }}
+        _hover={{ borderBottom: '1px solid blue', color: hoverColor }}
       >
         {name}
       </Tab>
@@ -364,39 +366,39 @@ function Main() {
   }, []);
 
   return (
-    <Container maxW="container.xl">
+    <Container maxW='container.xl'>
       {isLoading ? (
-        <Flex justify="center" mt={"5"}>
+        <Flex justify='center' mt={'5'}>
           <Spinner
-            thickness="5px"
-            speed="0.65s"
-            emptyColor="gray.200"
-            color="#3182ce"
-            size="lg"
+            thickness='5px'
+            speed='0.65s'
+            emptyColor='gray.200'
+            color='#3182ce'
+            size='lg'
           />
         </Flex>
       ) : (
         <>
           <Box
-            border="1px"
-            borderColor="gray.200"
-            borderRadius="10px"
-            overflow={"hidden"}
-            marginTop="50"
+            border='1px'
+            borderColor='gray.200'
+            borderRadius='10px'
+            overflow={'hidden'}
+            marginTop='50'
             boxShadow={BoxShadow}
           >
-            <Tabs align="center">
-              <TabList w="90%">
+            <Tabs align='center'>
+              <TabList w='90%'>
                 <Flex
-                  flexWrap="wrap"
-                  justify="center"
-                  gap={isLargerThan768 ? "2" : null}
+                  flexWrap='wrap'
+                  justify='center'
+                  gap={isLargerThan768 ? '2' : null}
                 >
-                  <TabSection name={"Stays"} />
-                  <TabSection name={"Flights"} />
-                  <TabSection name={"Cars"} />
-                  <TabSection name={"Packages"} />
-                  <TabSection name={"Things to do"} />
+                  <TabSection name={'Stays'} />
+                  <TabSection name={'Flights'} />
+                  <TabSection name={'Cars'} />
+                  <TabSection name={'Packages'} />
+                  <TabSection name={'Things to do'} />
                 </Flex>
               </TabList>
               <TabPanels>
@@ -420,45 +422,45 @@ function Main() {
           </Box>
           <Container
             boxShadow={BoxShadow}
-            maxW="container.xl"
-            mt="50px"
-            borderRadius="10px"
+            maxW='container.xl'
+            mt='50px'
+            borderRadius='10px'
             bgImage="url('https://a.travel-assets.com/travel-assets-manager/ux-887/Global-HP-Hero-928x398.jpg')"
-            bgPosition="center"
-            bgRepeat="no-repeat"
-            bgSize="cover"
+            bgPosition='center'
+            bgRepeat='no-repeat'
+            bgSize='cover'
           >
             <Flex
-              h="400px"
-              direction="column"
+              h='400px'
+              direction='column'
               gap={10}
-              justify="center"
-              align="center"
+              justify='center'
+              align='center'
               p={5}
-              textAlign="center"
-              color="white"
-              textShadow="0 0 20px black"
-              fontWeight="bold"
+              textAlign='center'
+              color='white'
+              textShadow='0 0 20px black'
+              fontWeight='bold'
             >
               <Box>
-                <Heading as="h1" color="white">
+                <Heading as='h1' color='white'>
                   Save instantly with Expedia Rewards
                 </Heading>
               </Box>
               <Box>
-                <Text color="white" fontSize="xl">
+                <Text color='white' fontSize='xl'>
                   You can enjoy access to perks like Member Prices, saving you
                   10% or more on select hotels. Terms may apply.
                 </Text>
               </Box>
               <Box>
-                <Link to="/" mb="5%" mt="2%" w="200px" size="lg">
+                <Link to='/' mb='5%' mt='2%' w='200px' size='lg'>
                   <Button
-                    mb="5%"
-                    mt="2%"
-                    w="200px"
-                    colorScheme="blue"
-                    size="lg"
+                    mb='5%'
+                    mt='2%'
+                    w='200px'
+                    colorScheme='blue'
+                    size='lg'
                   >
                     See Member Prices
                   </Button>
@@ -468,34 +470,34 @@ function Main() {
           </Container>
           <Container
             boxShadow={BoxShadow}
-            maxW="container.xl"
-            borderRadius="10px"
+            maxW='container.xl'
+            borderRadius='10px'
             bgImage="url('https://a.travel-assets.com/travel-assets-manager/gmvd-1482-bookearly-emea/667x320.jpg')"
-            bgPosition="center"
-            bgRepeat="no-repeat"
-            bgSize="cover"
-            mt={"50px"}
-            h={"300px"}
+            bgPosition='center'
+            bgRepeat='no-repeat'
+            bgSize='cover'
+            mt={'50px'}
+            h={'300px'}
           >
             <Flex
-              h="400px"
-              direction="column"
-              justify="center"
-              align="center"
+              h='400px'
+              direction='column'
+              justify='center'
+              align='center'
               p={5}
-              textAlign="center"
-              color="white"
-              textShadow="0 0 20px black"
-              fontWeight="bold"
-              gap={"30px"}
+              textAlign='center'
+              color='white'
+              textShadow='0 0 20px black'
+              fontWeight='bold'
+              gap={'30px'}
             >
               <Box>
-                <Heading as="h3" color="white" fontSize="20px">
+                <Heading as='h3' color='white' fontSize='20px'>
                   Plan ahead and save
                 </Heading>
               </Box>
               <Box>
-                <Heading as="h3" color="white" fontSize="20px">
+                <Heading as='h3' color='white' fontSize='20px'>
                   Book 60 days in advance for 20% off seletct stays.
                 </Heading>
               </Box>
