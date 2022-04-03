@@ -106,7 +106,7 @@ If wrong route called then 404 not found page will display.
 
 ## Responsive
 
-Our Website is fully responsive in all mobile, tablet and Laptop modes.
+Our Website is fully responsive in all mobile, tablet and Desktop views.
 ## Authors
 
 - [@Omkar Pasalkar](https://github.com/Omkar-WD)
