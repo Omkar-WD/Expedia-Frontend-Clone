@@ -3,8 +3,10 @@
 
 Expedia.co.in is an online travel agency owned by Expedia Group, an Indian online travel shopping company based in Place. The website and mobile app can be used to book airline tickets, hotel reservations, car rentals, cruise ships, and vacation packages.
 
-## 🛠 Tech Stacks
-Javascript, HTML, CSS, NodeJS, ExpressJS, ReactJS, redux, Chakra UI.
+## 🛠 Tech Stack
+
+<img src="https://cdn-icons-png.flaticon.com/512/226/226269.png" width=20/>JavaScript
+<!-- Javascript, HTML, CSS, NodeJS, ExpressJS, ReactJS, redux, Chakra UI. -->
 
 ## Landing Page
 Navbar and Menu are visible on the top of Landing Page from their a person can visit the pages visible in Navbar and Menubar.
