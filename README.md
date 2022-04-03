@@ -16,10 +16,10 @@ Navbar and Menu are visible on the top of Landing Page from their a person can v
 #### Tablet view
 ![Home Page Tab](https://user-images.githubusercontent.com/96103433/161424767-32cb5ae5-2e86-4e56-921f-082d39ca0c44.png)
 
-
+<p align="center">
  #### Mobile view
 ![Home Page Mobile](https://user-images.githubusercontent.com/96103433/161424809-c45636b8-6c29-412b-867a-b7c831f76bf4.png)
-
+</p>
 
 
 ## Navbar
