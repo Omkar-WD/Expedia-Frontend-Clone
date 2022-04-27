@@ -157,9 +157,9 @@ Our Website is fully responsive in all mobile, tablet and Desktop views.
 ## Contributors :
 1. [OMKAR PASALKAR](https://github.com/Omkar-WD)
 
-2. [@Prathamesh Mungekar](https://github.com/prathamsm7)
+2. [Prathamesh Mungekar](https://github.com/prathamsm7)
 
-3. [@Shashikant Patil](https://github.com/shashi530)
+3. [Shashikant Patil](https://github.com/shashi530)
 
 ## Blog
 www.blogspot.com
