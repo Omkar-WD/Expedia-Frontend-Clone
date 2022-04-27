@@ -154,11 +154,12 @@ If wrong route called then 404 not found page will display.
 ## Responsive
 
 Our Website is fully responsive in all mobile, tablet and Desktop views.
-## Authors
+## Contributors :
+1. [OMKAR PASALKAR](https://github.com/Omkar-WD)
 
-- [@Omkar Pasalkar](https://github.com/Omkar-WD)
-- [@Prathamesh Mungekar](https://github.com/prathamsm7)
-- [@Shashikant Patil](https://github.com/shashi530)
+2. [@Prathamesh Mungekar](https://github.com/prathamsm7)
+
+3. [@Shashikant Patil](https://github.com/shashi530)
 
 ## Blog
 www.blogspot.com
@@ -167,8 +168,6 @@ www.blogspot.com
 https://expedia-co-in-clone.netlify.app/
 
 ## Run Locally
-
-Clone the project
 
 ```bash
   git clone https://github.com/Omkar-WD/Expedia-Frontend-Clone.git
