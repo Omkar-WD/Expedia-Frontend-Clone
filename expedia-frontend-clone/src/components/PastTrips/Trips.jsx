@@ -12,67 +12,44 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import { BoxShadow } from "../Variables";
+import axios from "axios";
+import { isLogin } from "../../Redux/logger/action";
+import API from "../../API";
+import { useSelector } from "react-redux";
+
 function Trips() {
   const [isLoading, setIsLoading] = useState(true);
+  const [trips, setTrips] = useState([]);
+  const isLoginObj = useSelector((store) => store.isLogin.isLogin);
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
     }, 1000);
   }, []);
-  const trips = [
-    {
-      id: 1,
-      hotelId: 1,
-      hotelName: "Demo Name",
-      userId: 2,
-      amount: 500,
-      rooms: 4,
-      nights: 2,
-      bookingDate: "2022-12-12",
-      checkinDate: "2022-12-12",
-      checkoutDate: "2022-12-12",
-      transactionId: "123465789",
-    },
-    {
-      id: 2,
-      hotelId: 2,
-      hotelName: "Demo Name",
-      userId: 2,
-      amount: 500,
-      rooms: 4,
-      nights: 2,
-      bookingDate: "2022-12-12",
-      checkinDate: "2022-12-12",
-      checkoutDate: "2022-12-12",
-      transactionId: "123465789",
-    },
-    {
-      id: 3,
-      hotelId: 3,
-      hotelName: "Demo Name",
-      userId: 2,
-      amount: 500,
-      rooms: 4,
-      nights: 2,
-      bookingDate: "2022-12-12",
-      checkinDate: "2022-12-12",
-      checkoutDate: "2022-12-12",
-      transactionId: "123465789",
-    },
-    {
-      id: 4,
-      hotelId: 4,
-      hotelName: "Demo Name",
-      userId: 2,
-      amount: 500,
-      rooms: 4,
-      nights: 2,
-      bookingDate: "2022-12-12",
-      checkinDate: "2022-12-12",
-      checkoutDate: "2022-12-12",
-      transactionId: "123465789",
-    },
-  ];
+
+  useEffect(() => {
+    axios.get(`${API()}/payment/${isLoginObj.user._id}`).then((res) => {
+      // axios.get(`${API()}/payment/${isLoginObj.user._id}`).then((res) => {
+      console.log(res.data);
+      setTrips(res.data);
+    });
+  }, []);
+  // const trips = [
+  //   {
+  //     id: 1,
+  //     hotelId: 1,
+  //     hotelName: "Demo Name",
+  //     userId: 2,
+  //     amount: 500,
+  //     rooms: 4,
+  //     nights: 2,
+  //     bookingDate: "2022-12-12",
+  //     checkinDate: "2022-12-12",
+  //     checkoutDate: "2022-12-12",
+  //     transactionId: "123465789",
+  //   },
+  // ];
+
   return (
     <>
       {isLoading ? (
@@ -101,7 +78,7 @@ function Trips() {
                   <Th color="white">Hotel Name</Th>
                   <Th color="white">Rooms Book</Th>
                   <Th color="white">Total Nights</Th>
-                  <Th color="white">Total Amount</Th>
+                  <Th color="white">Total Amount (Rs)</Th>
                   <Th color="white">Booking Date</Th>
                   <Th color="white">Checkin Date</Th>
                   <Th color="white">Checkout Date</Th>
@@ -109,25 +86,27 @@ function Trips() {
                 </Tr>
               </Thead>
               <Tbody>
-                {trips.map((e) => (
-                  <Tr
-                    key={e.id}
-                    _hover={{
-                      bgColor: "#f7f9fb",
-                      cursor: "pointer",
-                    }}
-                  >
-                    <Td>{e.hotelId}</Td>
-                    <Td>{e.hotelName}</Td>
-                    <Td>{e.rooms}</Td>
-                    <Td>{e.nights}</Td>
-                    <Td>{e.amount}</Td>
-                    <Td>{e.bookingDate}</Td>
-                    <Td>{e.checkinDate}</Td>
-                    <Td>{e.checkoutDate}</Td>
-                    <Td>{e.transactionId}</Td>
-                  </Tr>
-                ))}
+                {trips.length > 0
+                  ? trips.map((e, i) => (
+                      <Tr
+                        key={e._id}
+                        _hover={{
+                          bgColor: "#f7f9fb",
+                          cursor: "pointer",
+                        }}
+                      >
+                        <Td>{i + 1}</Td>
+                        <Td>{e.hotelId.hotelName}</Td>
+                        <Td>{e.rooms}</Td>
+                        <Td>{e.night}</Td>
+                        <Td>{e.amount}</Td>
+                        <Td>{e.bookingDate}</Td>
+                        <Td>{e.checkinDate}</Td>
+                        <Td>{e.checkoutDate}</Td>
+                        <Td>{e.transactionId}</Td>
+                      </Tr>
+                    ))
+                  : null}
               </Tbody>
             </Table>
           </TableContainer>

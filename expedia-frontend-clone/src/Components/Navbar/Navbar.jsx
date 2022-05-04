@@ -48,10 +48,13 @@ function Navbar() {
   const dispatch = useDispatch();
 
   const handleSignout = (e) => {
-    localStorage.setItem("loginUser", {
-      token: "",
-      user: { firstName: "", lastName: "", email: "" },
-    });
+    localStorage.setItem(
+      "loginUser",
+      JSON.stringify({
+        token: "",
+        user: { firstName: "", lastName: "", email: "" },
+      })
+    );
     setTimeout(() => {
       Navigate("/signin");
     }, 3000);

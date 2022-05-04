@@ -11,8 +11,7 @@ function Favourite() {
   useEffect(() => {
     let url = `${API()}/favourite/userFavList/${isLoginObj.user._id}`;
     axios.get(url).then((res) => {
-      console.log(isLoginObj.user._id, url, res.data);
-      // setFavouriteList(res.data.hotelId);
+      setFavouriteList(res.data.hotelId);
     });
   }, []);
 

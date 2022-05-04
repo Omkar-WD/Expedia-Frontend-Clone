@@ -15,11 +15,12 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 
-import { useSelector } from "react-redux";
 import { BoxShadow } from "../Variables";
+import { useSelector } from "react-redux";
 
 function ProfileEdit() {
   const [isLoading, setIsLoading] = useState(true);
+  const isLoginObj = useSelector((store) => store.isLogin.isLogin);
   const [userData, setUserData] = useState({
     dob: "",
     gender: "select a gender",
@@ -44,7 +45,6 @@ function ProfileEdit() {
       });
   }, []);
 
-  const isLoginObj = useSelector((store) => store.isLogin.isLogin);
   const [isLargerThan992] = useMediaQuery("(min-width: 992px)");
   const onChangeInput = (e) => {
     const { id, value } = e.target;
@@ -52,13 +52,22 @@ function ProfileEdit() {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    toast({
-      title: "Profile Updated !!!",
-      status: "success",
-      duration: 2000,
-      isClosable: true,
-      position: "top",
-    });
+    console.log(userData);
+    axios
+      .patch(`${API()}/user/update`, {
+        userId: isLoginObj.user._id,
+        userData,
+      })
+      .then((res) => {
+        console.log(res);
+        toast({
+          title: "Profile Updated !!!",
+          status: "success",
+          duration: 2000,
+          isClosable: true,
+          position: "top",
+        });
+      });
   };
   return (
     <>
