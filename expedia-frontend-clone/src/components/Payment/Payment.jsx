@@ -112,7 +112,8 @@ function Payment() {
         body: JSON.stringify(payData),
       }).then((t) => t.json());
       const options = {
-        key: __DEV__ ? "rzp_test_LrUd2sYQ0QeGXG" : "PRODUCTION_KEY",
+        // key: __DEV__ ? "rzp_test_LrUd2sYQ0QeGXG" : "PRODUCTION_KEY",
+        key: __DEV__ ? "rzp_test_LrUd2sYQ0QeGXG" : "rzp_test_LrUd2sYQ0QeGXG",
         currency: data.currency,
         amount: data.amount * 100,
         order_id: data.id,
