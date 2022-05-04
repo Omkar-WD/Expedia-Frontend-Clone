@@ -46,6 +46,7 @@ function SignIn() {
         password: userData.password,
       })
       .then((res) => {
+        console.log("res", res.data);
         localStorage.setItem("loginUser", JSON.stringify(res.data));
         dispatch(isLogin(res.data));
         setTimeout(() => {

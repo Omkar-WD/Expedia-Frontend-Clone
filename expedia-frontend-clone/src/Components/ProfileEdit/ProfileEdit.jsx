@@ -31,14 +31,15 @@ function ProfileEdit() {
   });
   const toast = useToast();
   useEffect(() => {
+    console.log("isLoginObj", isLoginObj);
     setTimeout(() => {
       setIsLoading(false);
     }, 500);
     if (isLoginObj.token !== "")
       setUserData({
-        dob: "",
-        gender: "select a gender",
-        contact: "",
+        dob: isLoginObj.user.dob,
+        gender: isLoginObj.user.gender,
+        contact: isLoginObj.user.contact,
         email: isLoginObj.user.email,
         firstName: isLoginObj.user.firstName,
         lastName: isLoginObj.user.lastName,
@@ -46,6 +47,7 @@ function ProfileEdit() {
   }, []);
 
   const [isLargerThan992] = useMediaQuery("(min-width: 992px)");
+
   const onChangeInput = (e) => {
     const { id, value } = e.target;
     setUserData({ ...userData, [id]: value });

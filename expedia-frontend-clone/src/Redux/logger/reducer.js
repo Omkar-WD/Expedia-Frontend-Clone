@@ -2,7 +2,14 @@ import { IS_LOGIN } from "./action";
 
 let obj = JSON.parse(localStorage.getItem("loginUser")) || {
   token: "",
-  user: { firstName: "", lastName: "", email: "" },
+  user: {
+    firstName: "",
+    lastName: "",
+    email: "",
+    dob: "",
+    gender: "",
+    contact: "",
+  },
 };
 
 const initialState = { isLogin: obj };
