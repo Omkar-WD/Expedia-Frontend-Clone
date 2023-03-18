@@ -1,4 +1,4 @@
 function API() {
-  return "https://pumpkin-cake-23112.herokuapp.com";
+  return "https://expedia-backend-clone.onrender.com";
 }
 export default API;
